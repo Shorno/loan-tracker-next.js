@@ -1,113 +1,195 @@
+import Link from 'next/link'
+import Navbar from "@/components/navbar";
 import Image from "next/image";
+import heroImage from "@/public/hero-img.jpg";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+export default function LandingPage() {
+
+
+    return (
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
+            <Navbar/>
+
+            <main className="flex-grow">
+                <section className="pt-16 pb-20 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+                            <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+                                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                                    <span className="block">Simplify Your</span>
+                                    <span className="block text-indigo-600">Loan Management</span>
+                                </h1>
+                                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                                    LoanTracker provides a comprehensive solution for loan giving organizations to
+                                    manage and track loans efficiently. Stay on top of payments, interest rates, and
+                                    more with our intuitive platform.
+                                </p>
+                                <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+                                    <Link href={"/signup"}
+                                          className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                        Get started for free
+                                    </Link>
+                                </div>
+                            </div>
+                            <div
+                                className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+                                <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+                                    <Image
+                                        className="w-full rounded-xl"
+                                        src={heroImage}
+                                        alt="Loan management dashboard"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="features" className="py-16 bg-white">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="lg:text-center">
+                            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
+                            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                                Everything you need to manage loans
+                            </p>
+                            <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                                LoanTracker offers a comprehensive set of features to streamline your loan management
+                                process.
+                            </p>
+                        </div>
+
+                        <div className="mt-10">
+                            <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                                {[
+                                    {
+                                        name: 'Loan Portfolio Overview',
+                                        description: 'Get a bird\'s-eye view of your entire loan portfolio with our intuitive dashboard.',
+                                    },
+                                    {
+                                        name: 'Automated Payment Tracking',
+                                        description: 'Never miss a payment with our automated tracking and reminder system.',
+                                    },
+                                    {
+                                        name: 'Customizable Reports',
+                                        description: 'Generate detailed reports tailored to your organization\'s needs.',
+                                    },
+                                    {
+                                        name: 'Secure Document Management',
+                                        description: 'Store and manage loan documents securely in our cloud-based system.',
+                                    },
+                                ].map((feature) => (
+                                    <div key={feature.name} className="relative">
+                                        <dt>
+                                            <div
+                                                className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                                                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                          d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                            </div>
+                                            <p className="ml-16 text-lg leading-6 font-medium text-gray-900">{feature.name}</p>
+                                        </dt>
+                                        <dd className="mt-2 ml-16 text-base text-gray-500">{feature.description}</dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="testimonials" className="py-16 bg-gray-50">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-8">
+                            What our customers are saying
+                        </h2>
+                        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                            {[
+                                {
+                                    name: 'Sarah Johnson',
+                                    role: 'CFO, LoanPro Inc.',
+                                    content: 'LoanTracker has revolutionized our loan management process. It\'s intuitive, efficient, and has saved us countless hours.',
+                                },
+                                {
+                                    name: 'Michael Chen',
+                                    role: 'CEO, MicroFinance Solutions',
+                                    content: 'The reporting features in LoanTracker are unparalleled. We can now make data-driven decisions with ease.',
+                                },
+                                {
+                                    name: 'Emily Rodriguez',
+                                    role: 'Loan Officer, Community First',
+                                    content: 'I love how user-friendly LoanTracker is. It has made my job so much easier and more efficient.',
+                                },
+                            ].map((testimonial) => (
+                                <div key={testimonial.name} className="bg-white shadow-lg rounded-lg p-6">
+                                    <div className="text-gray-600 mb-4">{testimonial.content}</div>
+                                    <div className="font-semibold">{testimonial.name}</div>
+                                    <div className="text-sm text-gray-500">{testimonial.role}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section id="faq" className="py-16 bg-white">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-8">
+                            Frequently Asked Questions
+                        </h2>
+                        <div className="space-y-8">
+                            {[
+                                {
+                                    question: 'How secure is LoanTracker?',
+                                    answer: 'LoanTracker uses bank-level encryption and security measures to ensure your data is always protected.',
+                                },
+                                {
+                                    question: 'Can I integrate LoanTracker with my existing systems?',
+                                    answer: 'Yes, LoanTracker offers API integration capabilities to connect with your existing financial and CRM systems.',
+                                },
+                                {
+                                    question: 'Is there a free trial available?',
+                                    answer: 'We offer a 14-day free trial so you can experience the full capabilities of LoanTracker before committing.',
+                                },
+                            ].map((faq) => (
+                                <div key={faq.question} className="bg-gray-50 rounded-lg p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{faq.question}</h3>
+                                    <p className="text-gray-600">{faq.answer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer className="bg-gray-800 text-white">
+                <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4">LoanTracker</h3>
+                            <p className="text-sm text-gray-400">Simplifying loan management for organizations
+                                worldwide.</p>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+                            <ul className="space-y-2">
+                                <li><Link href={"/"} className="text-sm text-gray-400 hover:text-white">Home</Link></li>
+                                <li><Link href={"/features"}
+                                          className="text-sm text-gray-400 hover:text-white">Features</Link></li>
+                                <li><Link href={"faq"} className="text-sm text-gray-400 hover:text-white">FAQ</Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+                            <p className="text-sm text-gray-400">Email: support@loantracker.com</p>
+                            <p className="text-sm text-gray-400">Phone: (123) 456-7890</p>
+                        </div>
+                    </div>
+                    <div className="mt-8 border-t border-gray-700 pt-8 text-center">
+                        <p className="text-sm text-gray-400">&copy; 2023 LoanTracker. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    )
 }
