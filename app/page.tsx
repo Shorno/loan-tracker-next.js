@@ -118,7 +118,7 @@ export default function LandingPage() {
                                 {
                                     name: 'Emily Rodriguez',
                                     role: 'Loan Officer, Community First',
-                                    content: 'I love how user-friendly LoanTracker is. It has made my job so much easier and more efficient.',
+                                    content: 'I love how user.ts-friendly LoanTracker is. It has made my job so much easier and more efficient.',
                                 },
                             ].map((testimonial) => (
                                 <div key={testimonial.name} className="bg-white shadow-lg rounded-lg p-6">

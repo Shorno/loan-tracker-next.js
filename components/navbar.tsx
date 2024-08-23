@@ -28,11 +28,11 @@ export default function Navbar() {
                             </div>
                         </div>
                         <div className="hidden md:block">
-                            <Link href={"/login"}
+                            <Link href={"/auth/login"}
                                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                 Log in
                             </Link>
-                            <Link href={"/signup"}
+                            <Link href={"/auth/signup"}
                                   className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                 Sign up
                             </Link>
@@ -66,10 +66,10 @@ export default function Navbar() {
                         </div>
                         <div className="pt-4 pb-3 border-t border-gray-200">
                             <div className="flex items-center px-5">
-                                <Link href={"/login"}
+                                <Link href={"/auth/login"}
                                       className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50">Log
                                     in</Link>
-                                <Link href={"/signup"}
+                                <Link href={"/auth/signup"}
                                       className="block px-3 py-2 rounded-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">Sign
                                     up</Link>
                             </div>
