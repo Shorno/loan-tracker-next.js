@@ -26,10 +26,17 @@ export default function SignupPage(){
                                     </label>
                                     <input type="password" placeholder="password" className="input input-bordered"
                                            required/>
+
+                                    <label className="label">
+                                        <span className="label-text">Confirm Password</span>
+                                    </label>
+                                    <input type="password" placeholder="Confrim your password" className="input input-bordered"
+                                           required/>
                                     <label className="label">
                                         <Link href="#" className="label-text-alt link link-hover">Forgot
                                             password?</Link>
                                     </label>
+
                                 </div>
                                 <div className="form-control mt-6">
                                     <button className="btn btn-primary">Sign Up</button>
