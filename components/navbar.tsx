@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useSession } from "next-auth/react"
+import {signOut, useSession} from "next-auth/react"
 import { Menu, X } from "lucide-react"
 
 export default function Navbar() {
@@ -27,7 +27,7 @@ export default function Navbar() {
                     {isAuthenticated ? (
                         <>
                             <li><Link href={"/profile"}>Profile</Link></li>
-                            <li><Link href={"/auth/logout"}>Logout</Link></li>
+                            <li><button onClick={()=> signOut()}>Logout</button></li>
                         </>
                     ) : (
                         <>
@@ -67,12 +67,12 @@ export default function Navbar() {
 
             {/* Mobile menu overlay */}
             <div
-                className={`absolute left-0 right-0 bg-base-100 shadow-lg md:hidden transition-all duration-300 ease-in-out ${
-                    mobileMenuOpen ? 'top-full opacity-100' : 'top-[100%] opacity-0 pointer-events-none'
+                className={`absolute left-0 right-0 bg-base-300 shadow-lg md:hidden transition-all duration-300 ease-in-out ${
+                    mobileMenuOpen ? 'top-full opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
             >
-                <nav className="py-4">
-                    <ul className="menu menu-horizontal">
+                <nav className="bg-base-200 px-2 text-zinc-900">
+                    <ul className="menu menu-horizontal flex gap-4">
                         <NavItems />
                     </ul>
                 </nav>
