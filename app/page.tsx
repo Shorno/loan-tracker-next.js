@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Navbar from "@/components/navbar";
 import Image from "next/image";
 import heroImage from "@/public/hero-img.jpg";
 
@@ -8,8 +7,6 @@ export default function LandingPage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
-            <Navbar/>
-
             <main className="flex-grow">
                 <section className="pt-16 pb-20 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-7xl mx-auto">
