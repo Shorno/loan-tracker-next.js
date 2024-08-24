@@ -30,6 +30,7 @@ export default function SignupForm() {
             await signupAction(data);
         } catch (error) {
             if (error instanceof Error) {
+                setServerError(error.message);
                 if (error.message.includes("duplicate key value violates unique constraint")) {
                     setError("email", {
                         type: "manual",
@@ -41,7 +42,7 @@ export default function SignupForm() {
                     setServerError(error.message);
                 }
             } else {
-                setServerError("Unexpected server error occurred. Please try again.");
+                setServerError("Server error occurred. Please try again.");
             }
         }
     };
@@ -117,10 +118,12 @@ export default function SignupForm() {
                             <Link href="#" className="label-text-alt link link-hover">Forgot password?</Link>
                         </label>
 
-                        {serverError && <div className="text-error text-sm mt-2">
-                            <CircleAlert/>
+                        {serverError && <div
+                            className="text-error text-sm mt-2 flex gap-2 items-center justify-center align-text-top">
+                            <CircleAlert size={20}/>
                             {serverError}
                         </div>}
+
 
                         <div className="form-control mt-6">
                             <button type="submit" className="btn btn-primary" disabled={isSubmitting}>

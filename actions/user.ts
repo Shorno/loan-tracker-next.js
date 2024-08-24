@@ -6,7 +6,6 @@ import {signIn} from "@/auth";
 import {loginSchema, signupSchema} from "@/schemas/authSchema";
 import {Prisma} from "@prisma/client";
 
-
 export const signupAction = async (data: any) => {
     try {
         const validatedSignupData = signupSchema.parse(data);
@@ -16,6 +15,7 @@ export const signupAction = async (data: any) => {
         const existingUser = await prisma.user.findUnique({
             where: {email}
         });
+
 
         if (existingUser) {
             throw new Error(`${email} is already registered.`);
@@ -46,10 +46,9 @@ export const signupAction = async (data: any) => {
         } else if (error instanceof Error) {
             throw new Error(error.message);
         }
-        throw new Error("Unexpected server error occurred. Please try again.");
+        throw new Error("Server error occurred. Please try again.");
     }
     redirect("/auth/login");
-
 }
 
 
