@@ -3,15 +3,15 @@ import prisma from "@/prisma/db";
 import bcrypt from "bcryptjs";
 import {redirect} from "next/navigation";
 import {signIn} from "@/auth";
-import {signupSchema} from "@/schemas/authSchema";
+import {loginSchema, signupSchema} from "@/schemas/authSchema";
 import {Prisma} from "@prisma/client";
 
 
 export const signupAction = async (data: any) => {
     try {
-        const validatedData = signupSchema.parse(data);
+        const validatedSignupData = signupSchema.parse(data);
 
-        const {name, email, password} = validatedData;
+        const {name, email, password} = validatedSignupData;
 
         const existingUser = await prisma.user.findUnique({
             where: {email}
@@ -53,15 +53,20 @@ export const signupAction = async (data: any) => {
 }
 
 
-export const loginAction = async (formData: FormData) => {
-    const email = formData.get("email");
-    const password = formData.get("password");
+export const loginAction = async (data : any) => {
 
-    if (!email || !password) {
-        throw new Error("Please fill in all the fields");
-    }
 
     try {
+
+        const validatedLoginData = loginSchema.parse(data);
+
+        const {email, password} = validatedLoginData;
+
+        if (!email || !password) {
+            throw new Error("Email and password are required");
+        }
+
+
         await signIn("credentials", {
             redirect: false,
             callbackUrl: "/",
@@ -69,7 +74,7 @@ export const loginAction = async (formData: FormData) => {
             password: password as string
         })
     } catch (error) {
-        throw new Error("Invalid email or password")
+        throw new Error("Email or password is invalid")
     }
     redirect("/")
 

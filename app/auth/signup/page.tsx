@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import Link from "next/link";
-import {Loader} from "lucide-react";
+import {CircleAlert, Loader} from "lucide-react";
 import {signupSchema} from "@/schemas/authSchema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {signupAction} from "@/actions/user";
@@ -15,8 +15,14 @@ export default function SignupForm() {
     const [serverError, setServerError] = useState("");
 
     const {register, handleSubmit, formState: {errors, isSubmitting}, setError} = useForm<SignupFormData>({
-        mode: "onTouched",
-        resolver: zodResolver(signupSchema)
+        mode: "all",
+        resolver: zodResolver(signupSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+        }
     });
 
     const onSubmit = async (data: SignupFormData) => {
@@ -111,7 +117,10 @@ export default function SignupForm() {
                             <Link href="#" className="label-text-alt link link-hover">Forgot password?</Link>
                         </label>
 
-                        {serverError && <div className="text-error text-sm mt-2">{serverError}</div>}
+                        {serverError && <div className="text-error text-sm mt-2">
+                            <CircleAlert/>
+                            {serverError}
+                        </div>}
 
                         <div className="form-control mt-6">
                             <button type="submit" className="btn btn-primary" disabled={isSubmitting}>

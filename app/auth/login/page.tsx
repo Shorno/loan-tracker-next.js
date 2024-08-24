@@ -1,8 +1,39 @@
+"use client"
 import Link from "next/link";
 import {loginAction} from "@/actions/user";
+import React, {useState} from "react";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {loginSchema} from "@/schemas/authSchema";
+import {z} from "zod";
+import {CircleAlert, Loader} from "lucide-react";
 
-export default async function LoginPage() {
+type LoginFormData = z.infer<typeof loginSchema>
 
+export default function LoginPage() {
+    const [serverError, setServerError] = useState("");
+
+    const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<LoginFormData>({
+        mode: "all",
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        }
+    });
+
+
+    const onSubmit = async (data: LoginFormData) => {
+        try {
+            await loginAction(data);
+        } catch (error) {
+            if (error instanceof Error) {
+                setServerError(error.message);
+            } else {
+                setServerError("Unexpected server error occurred. Please try again.");
+            }
+        }
+    }
     return (
         <>
             <div>
@@ -15,29 +46,44 @@ export default async function LoginPage() {
                             </p>
                         </div>
                         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                            <form action={loginAction}
+                            <form onSubmit={handleSubmit(onSubmit)}
                                   className="card-body">
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text">Email</span>
                                     </label>
-                                    <input type="email" placeholder="email" name={"email"}
-                                           className="input input-bordered" required/>
+                                    <input
+                                        type="email"
+                                        placeholder="Please enter your email"
+                                        {...register("email")}
+                                        className={`input input-bordered ${errors.email ? 'input-error' : ''}`}
+                                    />
+                                    {errors.email &&
+                                        <span className="text-error text-xs mt-1">{String(errors.email.message)}</span>}
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text">Password</span>
                                     </label>
-                                    <input type="password" placeholder="password" name={"password"}
-                                           className="input input-bordered"
-                                           required/>
-                                    <label className="label">
-                                        <Link href="#" className="label-text-alt link link-hover">Forgot
-                                            password?</Link>
-                                    </label>
+                                    <input
+                                        type="password"
+                                        placeholder="Password"
+                                        {...register("password")}
+                                        className={`input input-bordered ${errors.password ? 'input-error' : ''}`}
+                                    />
+                                    {errors.password &&
+                                        <span className="text-error text-xs mt-1">{String(errors.password.message)}</span>}
                                 </div>
+
+                                {serverError && <div className="text-error text-sm mt-2 flex gap-2 items-center justify-center align-text-top">
+                                    <CircleAlert size={20}/>
+                                    {serverError}
+                                </div>}
+
                                 <div className="form-control mt-6">
-                                    <button className="btn btn-primary">Login</button>
+                                    <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                                        {isSubmitting ? <Loader className="animate-spin"/> : "Login"}
+                                    </button>
                                 </div>
                                 <label className="label py-4">
                                     <p>Don&apos;t have an account?</p> <p><Link href={"/auth/signup"}

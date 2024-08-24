@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import {signOut, useSession} from "next-auth/react"
-import {CoinsIcon, Menu, X} from "lucide-react"
+import {Menu, X} from "lucide-react"
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
