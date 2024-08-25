@@ -41,8 +41,8 @@ export default function LoginPage() {
     return (
         <>
             <div>
-                <div className="hero bg-base-200 min-h-screen">
-                    <div className="hero-content pt-24 flex-col lg:flex-row-reverse">
+                <div className="hero bg-base-200 h-screen">
+                    <div className="hero-content pt-10 flex-col lg:flex-row-reverse">
                         <div className="text-center lg:text-left">
                             <h1 className="text-4xl lg:text-5xl font-bold">Welcome Back!</h1>
                             <p className="py-6">
