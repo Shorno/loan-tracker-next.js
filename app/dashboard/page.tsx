@@ -1,24 +1,31 @@
-import {auth} from "@/auth";
+import {getAllUsers} from "@/actions/user";
 
 export default async function DashboardPage() {
-    const session = await auth()
-    const user = session?.user
+    const users = await getAllUsers();
+    console.log(users);
+
     return (
         <>
-            <div className="card bg-base-100 w-96 shadow-xl">
-                <div className="card-body">
-                    <h2 className="card-title">{user ? "Authenticated" : "Unauthenticated"}</h2>
-                    {
-                        user ? (
-                            <>
-                                <p>Welcome, {user.id}</p>
-                                <p>Email: {user.email}</p>
-                            </>
-                        ) : (
-                            <p>Please login to access the dashboard</p>
-                        )
-                    }
-                </div>
+            <div className="overflow-x-auto pt-24">
+                <table className="table table-zebra table-pin-cols ">
+                    {/* head */}
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>User Id</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {users.map((user: any) => (
+                        <tr key={user.id}>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.id}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
             </div>
         </>
     )

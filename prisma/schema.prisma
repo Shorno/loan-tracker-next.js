@@ -14,31 +14,35 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
+  role          UserRole  @default(USER)
   accounts      Account[]
   sessions      Session[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   clients       Client[]
-  team          Team      @relation(fields: [teamId], references: [id])
-  teamId        String    @db.ObjectId
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }
 
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String   @db.ObjectId
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
+  refresh_token     String?  @db.String
+  access_token      String?  @db.String
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.String
+  id_token          String?  @db.String
   session_state     String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -62,46 +66,36 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Team {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  users     User[]
-  clients   Client[]
-}
-
 model Client {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  phone       String?
-  address     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdBy   User     @relation(fields: [createdById], references: [id])
-  createdById String   @db.ObjectId
-  team        Team     @relation(fields: [teamId], references: [id])
-  teamId      String   @db.ObjectId
-  loan        Loan?
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  phone        String?
+  address      String?
+  serialNumber String  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  createdBy    User     @relation(fields: [createdById], references: [id])
+  createdById  String   @db.ObjectId
+  loan         Loan?
 }
 
 model Loan {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  amount          Float
-  interestRate    Float
-  totalPayable    Float
-  remainingAmount Float
-  startDate       DateTime
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  client          Client   @relation(fields: [clientId], references: [id])
-  clientId        String   @unique @db.ObjectId
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  amount          String
+  interestRate    String
+  totalPayable    String?
+  remainingAmount String?
+  paidAmount      String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  client          Client    @relation(fields: [clientId], references: [id])
+  clientId        String    @unique @db.ObjectId
   payments        Payment[]
 }
 
 model Payment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  amount    Float
+  amount    String
   date      DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

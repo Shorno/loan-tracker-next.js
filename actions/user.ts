@@ -78,3 +78,13 @@ export const loginAction = async (data: any) => {
     redirect("/dashboard");
 
 }
+
+export const getAllUsers = async () => {
+    return prisma.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true
+        }
+    });
+}

@@ -75,7 +75,7 @@ export default function Navbar() {
                 }`}
             >
                 <nav className="bg-base-200 px-2 font-semibold text-zinc-900">
-                    <ul className="menu menu-horizontal flex gap-4">
+                    <ul className="menu menu-horizontal ">
                         <NavItems/>
                     </ul>
                 </nav>
