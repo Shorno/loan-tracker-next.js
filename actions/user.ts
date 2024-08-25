@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 import {redirect} from "next/navigation";
 import {signIn} from "@/auth";
 import {loginSchema, signupSchema} from "@/schemas/authSchema";
-import {Prisma} from "@prisma/client";
 
 export const signupAction = async (data: any) => {
     try {
@@ -16,11 +15,9 @@ export const signupAction = async (data: any) => {
             where: {email}
         });
 
-
         if (existingUser) {
             return {error: `${email} is already registered.`}
         }
-
         const hashedPassword = await bcrypt.hash(password, 12);
 
         await prisma.user.create({
@@ -37,16 +34,10 @@ export const signupAction = async (data: any) => {
         });
         console.log("User created successfully");
     } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error.code === 'P2002') {
-                return {error: "A user with this email already exists."};
-            }
-        } else if (error instanceof Prisma.PrismaClientValidationError) {
-            return {error: "Invalid data provided. Please check your input and try again."};
-        } else if (error instanceof Error) {
+        if (error instanceof Error) {
             return {error: error.message}
         }
-        return {error: "Server error occurred. Please try again"};
+        return {error: "Unexpected server error occurred. Please try again"};
     }
     redirect("/auth/login");
 }
@@ -73,6 +64,6 @@ export const loginAction = async (data: any) => {
     } catch (error) {
         throw new Error("Email or password is invalid")
     }
-    redirect("/")
+    redirect("/dashboard");
 
 }

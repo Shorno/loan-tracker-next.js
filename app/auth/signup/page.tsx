@@ -14,7 +14,7 @@ type SignupFormData = z.infer<typeof signupSchema>
 export default function SignupForm() {
     const [serverError, setServerError] = useState("");
 
-    const {register, handleSubmit, formState: {errors, isSubmitting}, setError} = useForm<SignupFormData>({
+    const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<SignupFormData>({
         mode: "all",
         resolver: zodResolver(signupSchema),
         defaultValues: {
@@ -25,28 +25,6 @@ export default function SignupForm() {
         }
     });
 
-    // const onSubmit = async (data: SignupFormData) => {
-    //     try {
-    //         await signupAction(data);
-    //     } catch (error) {
-    //         if (error instanceof Error) {
-    //             setServerError(error.message);
-    //             if (error.message.includes("duplicate key value violates unique constraint")) {
-    //                 setError("email", {
-    //                     type: "manual",
-    //                     message: "This email is already in use."
-    //                 });
-    //             } else if (error.message.includes("Invalid data provided")) {
-    //                 setServerError("Team information is required.");
-    //             } else {
-    //                 setServerError(error.message);
-    //             }
-    //         } else {
-    //             setServerError("Server error occurred. Please try again.");
-    //         }
-    //     }
-    // };
-
 
     const onSubmit = async (data: SignupFormData) => {
         // Clear previous server error messages
@@ -55,45 +33,14 @@ export default function SignupForm() {
         try {
             const response = await signupAction(data);
 
-            // Check if there was an error in the signup action
             if (response?.error) {
                 setServerError(response.error);
-
-                // Handling specific known errors
-                if (response.error.includes("already registered")) {
-                    setError("email", {
-                        type: "manual",
-                        message: response.error,
-                    });
-                } else if (response.error.includes("Invalid data provided")) {
-                    // Handling validation errors
-                    setServerError("Invalid input data. Please review your entries and try again.");
-                }
                 return;
             }
 
-            // On successful signup, you might redirect the user or show a success message
-            // For instance, redirect to the login page:
-
         } catch (error) {
             if (error instanceof Error) {
-                // General error handling for exceptions
-                setServerError("An unexpected error occurred. Please try again.");
-
-                // More specific error handling based on the error message
-                if (error.message.includes("duplicate key value violates unique constraint")) {
-                    setError("email", {
-                        type: "manual",
-                        message: "This email is already in use.",
-                    });
-                } else if (error.message.includes("Invalid data provided")) {
-                    setServerError("Team information is required.");
-                } else {
-                    setServerError(error.message);
-                }
-            } else {
-                // Handling non-error object issues, which are rare but possible
-                setServerError("An unknown error occurred. Please try again.");
+                setServerError("Unexpected server error occurred. Please try again.");
             }
         }
     };
@@ -108,7 +55,7 @@ export default function SignupForm() {
                     </p>
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+                    <form onSubmit={handleSubmit(onSubmit)} className="card-body" noValidate>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
