@@ -6,65 +6,19 @@ import {signIn} from "@/auth";
 import {loginSchema, signupSchema} from "@/schemas/authSchema";
 import {Prisma} from "@prisma/client";
 
-// export const signupAction = async (data: any) => {
-//     try {
-//         const validatedSignupData = signupSchema.parse(data);
-//
-//         const {name, email, password} = validatedSignupData;
-//
-//         const existingUser = await prisma.user.findUnique({
-//             where: {email}
-//         });
-//
-//
-//         if (existingUser) {
-//             throw new Error(`${email} is already registered.`);
-//         }
-//
-//         const hashedPassword = await bcrypt.hash(password, 12);
-//
-//         await prisma.user.create({
-//             data: {
-//                 name,
-//                 email,
-//                 password: hashedPassword,
-//                 team: {
-//                     create: {
-//                         name: "Personal"
-//                     }
-//                 }
-//             }
-//         });
-//         console.log("User created successfully");
-//     } catch (error) {
-//         if (error instanceof Prisma.PrismaClientKnownRequestError) {
-//             if (error.code === 'P2002') {
-//                 throw new Error("A user with this email already exists.");
-//             }
-//         } else if (error instanceof Prisma.PrismaClientValidationError) {
-//             throw new Error("Invalid data provided. Please check your input and try again.");
-//         } else if (error instanceof Error) {
-//             throw new Error(error.message);
-//         }
-//         throw new Error("Server error occurred. Please try again.");
-//     }
-//     redirect("/auth/login");
-// }
-
-
-export async function signupAction(prevState: { error: string }, formData: FormData) {
-    const rawFormData = Object.fromEntries(formData.entries());
-
+export const signupAction = async (data: any) => {
     try {
-        const validatedSignupData = signupSchema.parse(rawFormData);
-        const { name, email, password } = validatedSignupData;
+        const validatedSignupData = signupSchema.parse(data);
+
+        const {name, email, password} = validatedSignupData;
 
         const existingUser = await prisma.user.findUnique({
-            where: { email }
+            where: {email}
         });
 
+
         if (existingUser) {
-            return { error: `${email} is already registered` };
+            return {error: `${email} is already registered.`}
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -81,26 +35,24 @@ export async function signupAction(prevState: { error: string }, formData: FormD
                 }
             }
         });
-
         console.log("User created successfully");
-        redirect("/auth/login");
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2002') {
-                return { error: "A user with this email already exists." };
+                return {error: "A user with this email already exists."};
             }
         } else if (error instanceof Prisma.PrismaClientValidationError) {
-            return { error: "Invalid data provided. Please check your input and try again." };
+            return {error: "Invalid data provided. Please check your input and try again."};
         } else if (error instanceof Error) {
-            return { error: error.message };
+            return {error: error.message}
         }
-        return { error: "Server error occurred. Please try again." };
+        return {error: "Server error occurred. Please try again"};
     }
+    redirect("/auth/login");
 }
 
-export const loginAction = async (data : any) => {
 
-
+export const loginAction = async (data: any) => {
     try {
 
         const validatedLoginData = loginSchema.parse(data);
