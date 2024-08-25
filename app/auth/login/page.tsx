@@ -13,6 +13,7 @@ type LoginFormData = z.infer<typeof loginSchema>
 export default function LoginPage() {
     const [serverError, setServerError] = useState("");
 
+
     const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<LoginFormData>({
         mode: "all",
         resolver: zodResolver(loginSchema),
