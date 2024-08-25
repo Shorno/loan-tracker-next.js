@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import {useState} from "react"
 import Link from "next/link"
 import {signOut, useSession} from "next-auth/react"
 import {Menu, X} from "lucide-react"
@@ -27,7 +27,9 @@ export default function Navbar() {
                     {isAuthenticated ? (
                         <>
                             <li><Link href={"/profile"}>Profile</Link></li>
-                            <li><button onClick={()=> signOut()}>Logout</button></li>
+                            <li>
+                                <button onClick={() => signOut({callbackUrl: "/", redirect: true})}>Logout</button>
+                            </li>
                         </>
                     ) : (
                         <>
@@ -44,13 +46,14 @@ export default function Navbar() {
         <header className="sticky top-0 z-50 bg-base-100 shadow-md">
             <div className="navbar container mx-auto px-4">
                 <div className="flex-1">
-                    <Link href="/" className="flex gap-2 text-2xl font-extrabold bg-gradient-to-r from-black  to-blue-600 text-transparent bg-clip-text">
+                    <Link href="/"
+                          className="flex gap-2 text-2xl font-extrabold bg-gradient-to-r from-black  to-blue-600 text-transparent bg-clip-text">
                         LoanTrack
                     </Link>
                 </div>
                 <div className="flex-none hidden md:block">
                     <ul className="menu menu-horizontal px-1">
-                        <NavItems />
+                        <NavItems/>
                     </ul>
                 </div>
                 <div className="flex-none md:hidden">
@@ -60,7 +63,7 @@ export default function Navbar() {
                         aria-expanded={mobileMenuOpen}
                         aria-label="Toggle menu"
                     >
-                        {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                        {mobileMenuOpen ? <X className="h-6 w-6"/> : <Menu className="h-6 w-6"/>}
                     </button>
                 </div>
             </div>
@@ -73,7 +76,7 @@ export default function Navbar() {
             >
                 <nav className="bg-base-200 px-2 font-semibold text-zinc-900">
                     <ul className="menu menu-horizontal flex gap-4">
-                        <NavItems />
+                        <NavItems/>
                     </ul>
                 </nav>
             </div>

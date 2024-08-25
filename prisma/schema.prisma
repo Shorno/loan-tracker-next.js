@@ -74,18 +74,16 @@ model Team {
 model Client {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  email       String?
   phone       String?
   address     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull) // Make User optional
-  createdById String?  @db.ObjectId // Make this field nullable
-  team        Team?    @relation(fields: [teamId], references: [id], onDelete: SetNull)     // Make Team optional
-  teamId      String?  @db.ObjectId // Make this field nullable
-  loans       Loan[]
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String   @db.ObjectId
+  team        Team     @relation(fields: [teamId], references: [id])
+  teamId      String   @db.ObjectId
+  loan        Loan?
 }
-
 
 model Loan {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -94,11 +92,10 @@ model Loan {
   totalPayable    Float
   remainingAmount Float
   startDate       DateTime
-  endDate         DateTime?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   client          Client   @relation(fields: [clientId], references: [id])
-  clientId        String   @db.ObjectId
+  clientId        String   @unique @db.ObjectId
   payments        Payment[]
 }
 
