@@ -27,7 +27,7 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
                 const password = credentials.password as string | undefined;
 
                 if (!email || !password) {
-                    throw new CredentialsSignin("Please provide both email and a password");
+                    throw new CredentialsSignin("Email and password are required");
                 }
 
                 const user = await prisma.user.findUnique({
@@ -37,10 +37,10 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
                 });
 
                 if (!user) {
-                    throw new CredentialsSignin("Email is not associated with any account");
+                    throw new CredentialsSignin("Email is not registered");
                 }
                 if (!user.password) {
-                    throw new CredentialsSignin("Invalid email or password");
+                    throw new CredentialsSignin("Invalid Credentials");
                 }
 
                 const isPasswordCorrect = await bcrypt.compare(password, user.password);

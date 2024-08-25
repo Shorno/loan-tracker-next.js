@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import {redirect} from "next/navigation";
 import {signIn} from "@/auth";
 import {loginSchema, signupSchema} from "@/schemas/authSchema";
+import {AuthError} from "next-auth";
 
 export const signupAction = async (data: any) => {
     try {
@@ -51,7 +52,7 @@ export const loginAction = async (data: any) => {
         const {email, password} = validatedLoginData;
 
         if (!email || !password) {
-            throw new Error("Email and password are required");
+            return {error: "Email and password are required"};
         }
 
 
@@ -62,7 +63,17 @@ export const loginAction = async (data: any) => {
             password: password as string
         })
     } catch (error) {
-        throw new Error("Email or password is invalid")
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                    if (error.message && error.message.includes("Password")) {
+                        return {error: "Password is incorrect. Please check your password and try again."};
+                    } else if (error.message && error.message.includes("Email")) {
+                        return {error: "Email is not associated with any LoanTrack account."};
+                    }
+            }
+        }
+        return {error: "Unexpected server error occurred. Please try again."};
     }
     redirect("/dashboard");
 

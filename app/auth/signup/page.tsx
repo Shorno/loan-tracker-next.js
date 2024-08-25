@@ -28,8 +28,7 @@ export default function SignupForm() {
 
     const onSubmit = async (data: SignupFormData) => {
         // Clear previous server error messages
-        setServerError("");
-
+        // setServerError("");
         try {
             const response = await signupAction(data);
 
@@ -47,7 +46,7 @@ export default function SignupForm() {
 
     return (
         <div className="hero bg-base-200 min-h-screen">
-            <div className="hero-content flex-col lg:flex-row-reverse">
+            <div className="hero-content pt-24 flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
                     <h1 className="text-5xl font-bold">Sign Up</h1>
                     <p className="py-6">
@@ -131,7 +130,7 @@ export default function SignupForm() {
 
                         <label className="label py-4">
                             <p>Already have an account?</p> <p><Link href={"/auth/login"}
-                                                                     className="link link-hover">Login</Link></p>
+                                                                     className="link link-hover text-blue-700 font-semibold">Login</Link></p>
                         </label>
                     </form>
                 </div>

@@ -26,11 +26,14 @@ export default function LoginPage() {
 
     const onSubmit = async (data: LoginFormData) => {
         try {
-            await loginAction(data);
+            const response = await loginAction(data);
+
+            if (response?.error) {
+                setServerError(response.error);
+                return;
+            }
         } catch (error) {
             if (error instanceof Error) {
-                setServerError(error.message);
-            } else {
                 setServerError("Unexpected server error occurred. Please try again.");
             }
         }
@@ -39,9 +42,9 @@ export default function LoginPage() {
         <>
             <div>
                 <div className="hero bg-base-200 min-h-screen">
-                    <div className="hero-content flex-col lg:flex-row-reverse">
+                    <div className="hero-content pt-24 flex-col lg:flex-row-reverse">
                         <div className="text-center lg:text-left">
-                            <h1 className="text-5xl font-bold">Welcome Back!</h1>
+                            <h1 className="text-4xl lg:text-5xl font-bold">Welcome Back!</h1>
                             <p className="py-6">
                                 Please login to continue using LoanTracker and manage your loans efficiently.
                             </p>
@@ -88,7 +91,7 @@ export default function LoginPage() {
                                 </div>
                                 <label className="label py-4">
                                     <p>Don&apos;t have an account?</p> <p><Link href={"/auth/signup"}
-                                                                                className="link link-hover">Sign
+                                                                                className="link link-hover text-blue-700 font-semibold ">Sign
                                     Up</Link></p>
                                 </label>
                             </form>
