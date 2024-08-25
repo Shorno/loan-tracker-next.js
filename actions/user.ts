@@ -26,11 +26,7 @@ export const signupAction = async (data: any) => {
                 name,
                 email,
                 password: hashedPassword,
-                team: {
-                    create: {
-                        name: "Personal"
-                    }
-                }
+
             }
         });
         console.log("User created successfully");
