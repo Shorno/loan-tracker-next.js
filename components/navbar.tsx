@@ -1,17 +1,13 @@
 "use client"
-
-import {useState} from "react"
 import Link from "next/link"
 import {signOut, useSession} from "next-auth/react"
-import {Menu, X} from "lucide-react"
+import {Menu} from "lucide-react";
 
 export default function Navbar() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const {status} = useSession()
     const isAuthenticated = status === "authenticated"
     const isLoading = status === "loading"
 
-    const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen)
 
     const NavItems = () => (
         <>
@@ -43,43 +39,38 @@ export default function Navbar() {
     )
 
     return (
-        <header className="sticky top-0 z-50 bg-base-100 shadow-md">
-            <div className="navbar container mx-auto px-4">
-                <div className="flex-1">
-                    <Link href="/"
-                          className="flex gap-2 text-2xl font-extrabold bg-gradient-to-r from-black  to-blue-600 text-transparent bg-clip-text">
-                        LoanTrack
-                    </Link>
+        <>
+            <div className="drawer z-10 ">
+                <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
+                <div className="drawer-content flex flex-col  ">
+                    {/* Navbar */}
+                    <div className={"shadow-md  "}>
+                        <div className="navbar container mx-auto ">
+                            <div className="mx-2 flex-1 px-2">Navbar Title</div>
+                            <div className="flex lg:hidden">
+                                <label htmlFor="my-drawer-3" aria-label="open sidebar"
+                                       className="btn btn-square btn-ghost">
+                                    <Menu/>
+                                </label>
+                            </div>
+                            <div className="hidden flex-none lg:block">
+                                <ul className="menu menu-horizontal">
+                                    {/* Navbar menu content here */}
+                                    <li><a>Navbar Item 1</a></li>
+                                    <li><a>Navbar Item 2</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex-none hidden md:block">
-                    <ul className="menu menu-horizontal px-1">
-                        <NavItems/>
+                <div className="drawer-side">
+                    <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
+                    <ul className="menu bg-base-200 min-h-full w-52 p-4">
+                        <li><a>Sidebar Item 1</a></li>
+                        <li><a>Sidebar Item 2</a></li>
                     </ul>
                 </div>
-                <div className="flex-none md:hidden">
-                    <button
-                        onClick={toggleMobileMenu}
-                        className="btn btn-square btn-ghost"
-                        aria-expanded={mobileMenuOpen}
-                        aria-label="Toggle menu"
-                    >
-                        {mobileMenuOpen ? <X className="h-6 w-6"/> : <Menu className="h-6 w-6"/>}
-                    </button>
-                </div>
             </div>
-
-            {/* Mobile menu overlay */}
-            <div
-                className={`absolute left-0 right-0 bg-base-300 shadow-lg md:hidden transition-all duration-300 ease-in-out ${
-                    mobileMenuOpen ? 'top-full opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-            >
-                <nav className="bg-base-200 px-2 font-semibold text-zinc-900">
-                    <ul className="menu menu-horizontal ">
-                        <NavItems/>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+        </>
     )
 }
