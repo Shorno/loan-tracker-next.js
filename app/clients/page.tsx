@@ -12,35 +12,23 @@ export default async function ClientsPage() {
                 <table className="table table-zebra  table-pin-cols table-pin-rows">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Serial Number</th>
-                        <th>Loan Amount</th>
-                        <th>Interest Rate</th>
-                        <th>Total Payable</th>
-                        <th>Amount Paid</th>
-                        <th>Remaining Payment</th>
-                        <th>Client Details</th>
+                        <th>Member Name</th>
+                        <th>Due Amount</th>
+                        <th>Info</th>
+
                     </tr>
                     </thead>
                     <tbody>
                     {
                         clients && clients.map(client => (
                             <tr key={client.id}>
-                                <th>{client.name}</th>
-                                <td>{client.phone}</td>
-                                <td>{client.address}</td>
-                                <td>{client.serialNumber}</td>
+                                <th>{client.name} #{client.serialNumber} </th>
+                                <td className={"badge badge-warning badge-xs mt-3"}>BDT {client.loan?.remainingAmount}</td>
+
                                 {client.loan && (
                                     <>
-                                        <td>${client.loan.amount}</td>
-                                        <td>{client.loan.interestRate}%</td>
-                                        <td>${client.loan.totalPayable}</td>
-                                        <td>${client.loan.paidAmount}</td>
-                                        <td>${client.loan.remainingAmount}</td>
                                         <td>
-                                            <Link href={`/clients/${client.id}`}>
+                                            <Link href={`/clients/${client.id}`} className={"text-blue-700"}>
                                                 View Details
                                             </Link>
                                         </td>

@@ -10,7 +10,7 @@ export default async function ClientDetails({params}: { params: { id: string } }
 
     return (
         <div className={"container mx-auto pt-20"}>
-            <div className="card bg-indigo-100 w-[22rem] mx-auto items-center">
+            <div className="card bg-indigo-100 w-[25rem] mx-auto items-center">
                 <div className="avatar placeholder justify-center pt-4">
                     <div className="bg-neutral text-neutral-content w-14 rounded-full">
                         <span className="text-3xl">{client?.name[0]}</span>
@@ -25,7 +25,7 @@ export default async function ClientDetails({params}: { params: { id: string } }
                     </div>
                 </div>
             </div>
-            <div className={"grid pt-8 grid-cols-2 gap-1"}>
+            <div className={"grid pt-8 grid-cols-2 gap-1 px-4"}>
                 <div className="stats shadow">
                     <div className="stat">
                         <div className="stat-title">Loan Amount</div>
