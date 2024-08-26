@@ -9,7 +9,7 @@ export default async function ClientsPage() {
     return (
         <div className={"h-screen pt-24 container mx-auto"}>
             <div className="overflow-x-auto">
-                <table className="table table-zebra  table-pin-cols table-pin-rows">
+                <table className="table table-zebra  table-pin-cols table-pin-rows ">
                     <thead>
                     <tr>
                         <th>Member Name</th>

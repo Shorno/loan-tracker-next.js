@@ -5,13 +5,16 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {CircleAlert, Loader} from "lucide-react";
 import {clientLoanSchema} from "@/schemas/clientSchema"; // You'll need to create this
-import {createClientLoanAction} from "@/actions/clients"; // You'll need to create this
+import {createClientLoanAction} from "@/actions/clients";
+import toast from "react-hot-toast";
+import {useRouter} from "next/navigation"; // You'll need to create this
 
 
 type ClientLoanFormData = z.infer<typeof clientLoanSchema>;
 
 export default function ClientLoanCreationForm() {
     const [serverError, setServerError] = useState("");
+    const router = useRouter();
 
     const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<ClientLoanFormData>({
         mode: "all",
@@ -35,6 +38,9 @@ export default function ClientLoanCreationForm() {
             if (response?.error) {
                 setServerError(response.error);
                 return;
+            }else if(response?.success){
+                toast.success("New member created successfully.");
+                router.push("/clients");
             }
         } catch (error) {
             if (error instanceof Error) {
