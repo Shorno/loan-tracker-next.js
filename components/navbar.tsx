@@ -29,7 +29,7 @@ export default function Navbar() {
         <>
             <div className="z-30">
                 <div className="">
-                    <div className="navbar container fixed top-0 mx-auto bg-base-200 z-10 shadow-md">
+                    <div className="navbar container fixed lg:relative mx-auto bg-base-100 lg:shadow-none z-10 shadow-md">
                         <div className="flex-1 flex items-center">
                             <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                                 <Link href={"/"}>
@@ -121,8 +121,8 @@ export default function Navbar() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href={"/profile"} className={`${path === "/profile" ? "bg-base-300" : ""}`}>
-                                    Profile
+                                <Link href={"/clients"} className={`${path === "/clients" ? "bg-base-300" : ""}`}>
+                                    Clients
                                 </Link>
                             </li>
                         </ul>

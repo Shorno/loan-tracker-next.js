@@ -69,8 +69,8 @@ model VerificationToken {
 model Client {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  phone        String?
-  address      String?
+  phone        String
+  address      String
   serialNumber String  @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
