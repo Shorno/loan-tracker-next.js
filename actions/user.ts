@@ -58,6 +58,8 @@ export const loginAction = async (data: any) => {
             email: email as string,
             password: password as string
         })
+
+        return {success: true};
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -71,7 +73,7 @@ export const loginAction = async (data: any) => {
         }
         return {error: "Unexpected server error occurred. Please try again."};
     }
-    redirect("/dashboard");
+    // redirect("/dashboard");
 
 }
 

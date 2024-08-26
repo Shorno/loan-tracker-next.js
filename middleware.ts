@@ -10,15 +10,17 @@ export async function middleware(request: NextRequest) {
 
     const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname)
     const isAuthRoute = request.nextUrl.pathname.startsWith('/auth/')
+    const isLandingPage = request.nextUrl.pathname === '/'
 
-    if (!session && !isPublicRoute) {
+    if (!session && !isPublicRoute && !isLandingPage) {
         // User is not logged in and trying to access a protected route
         return NextResponse.redirect(new URL('/auth/login', request.url))
     }
 
-    if (session && isAuthRoute) {
-        // User is logged in and trying to access auth routes (login, signup)
-        return NextResponse.redirect(new URL('/', request.url))
+    if (session){
+        if (isAuthRoute || isLandingPage){
+            return NextResponse.redirect(new URL('/dashboard', request.url))
+        }
     }
 
     return NextResponse.next()

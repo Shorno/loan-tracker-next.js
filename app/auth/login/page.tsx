@@ -7,11 +7,14 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {loginSchema} from "@/schemas/authSchema";
 import {z} from "zod";
 import {CircleAlert, Loader} from "lucide-react";
+import {useRouter} from "next/navigation";
+import toast from "react-hot-toast";
 
 type LoginFormData = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
     const [serverError, setServerError] = useState("");
+    const router = useRouter();
 
 
     const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<LoginFormData>({
@@ -31,6 +34,9 @@ export default function LoginPage() {
             if (response?.error) {
                 setServerError(response.error);
                 return;
+            }else if (response?.success){
+                toast.success("Login Successful.");
+                router.push("/");
             }
         } catch (error) {
             if (error instanceof Error) {
