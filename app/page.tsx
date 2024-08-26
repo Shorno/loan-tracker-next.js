@@ -8,7 +8,7 @@ export default function LandingPage() {
     return (
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
             <main className="flex-grow">
-                <section className="pt-16 pb-20 px-4 sm:px-6 lg:px-8">
+                <section className="pt-20  pb-20 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-7xl mx-auto">
                         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
                             <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">

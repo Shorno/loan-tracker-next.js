@@ -6,7 +6,7 @@ export default async function DashboardPage() {
 
     return (
         <>
-            <div className="overflow-x-auto pt-24">
+            <div className="overflow-x-auto pt-24 container mx-auto">
                 <table className="table table-zebra table-pin-cols ">
                     {/* head */}
                     <thead>
