@@ -25,6 +25,8 @@ export default function Navbar() {
     const isLoading = status === "loading"
     const path = usePathname();
 
+    console.log(isAuthenticated)
+
     return (
         <>
             <div className="z-30">
@@ -81,7 +83,7 @@ export default function Navbar() {
                                                 <DropdownMenuSeparator className="bg-gray-300"/>
                                                 <DropdownMenuItem
                                                     className="hover:bg-zinc-800 rounded-md hover:text-base-200"
-                                                    onClick={() => signOut({callbackUrl: "/", redirect: true})}
+                                                    onClick={() => signOut({callbackUrl: "/auth/login", redirect: true})}
                                                 >
                                                     <LogOut className="mr-2 h-4 w-4"/>
                                                     <span>Log out</span>

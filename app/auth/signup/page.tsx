@@ -27,7 +27,6 @@ export default function SignupForm() {
 
 
     const onSubmit = async (data: SignupFormData) => {
-        // setServerError("");
         try {
             const response = await signupAction(data);
 

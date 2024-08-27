@@ -1,8 +1,19 @@
-import NextAuth, {CredentialsSignin} from "next-auth";
+import NextAuth from "next-auth";
 import {PrismaAdapter} from "@auth/prisma-adapter";
 import prisma from "@/prisma/db";
-import Credentials from "@auth/core/providers/credentials";
 import bcrypt from "bcryptjs";
+import Credentials from "@auth/core/providers/credentials";
+import { CredentialsSignin } from "@auth/core/errors" // import is specific to your framework
+
+class UserNotFound extends CredentialsSignin {
+    code = "404";
+}
+class InvalidCredentials extends CredentialsSignin {
+    code = "401";
+}
+class InvalidPassword extends CredentialsSignin {
+    code = "401";
+}
 
 export const {handlers, auth, signIn, signOut} = NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -37,15 +48,15 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
                 });
 
                 if (!user) {
-                    throw new CredentialsSignin("Email is not registered");
+                    throw new UserNotFound();
                 }
                 if (!user.password) {
-                    throw new CredentialsSignin("Invalid Credentials");
+                    throw new InvalidCredentials()
                 }
 
                 const isPasswordCorrect = await bcrypt.compare(password, user.password);
                 if (!isPasswordCorrect) {
-                    throw new CredentialsSignin("Password is incorrect");
+                    throw new InvalidPassword();
                 }
 
                 return {
@@ -56,8 +67,8 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
             }
         })
     ],
-    pages :{
-        signIn: "/auth/login",
+    pages: {
+        signIn: "/new-login",
         signOut: "/auth/logout",
         error: "/auth/error",
         verifyRequest: "/auth/verify-request",
@@ -65,7 +76,7 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
     session: {
         strategy: "jwt",
     },
-    callbacks : {
+    callbacks: {
         async jwt({token, user}) {
             if (user) {
                 token.id = user.id;
@@ -74,10 +85,10 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
         },
 
         async session({session, token}) {
-           if (session.user){
-               session.user.id = token.id as string;
-           }
-              return session;
+            if (session.user) {
+                session.user.id = token.id as string;
+            }
+            return session;
         }
     },
     secret: process.env.AUTH_SECRET,

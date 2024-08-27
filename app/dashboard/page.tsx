@@ -2,13 +2,11 @@ import {getAllUsers} from "@/actions/user";
 
 export default async function DashboardPage() {
     const users = await getAllUsers();
-    console.log(users);
 
     return (
         <>
             <div className="overflow-x-auto pt-24 container mx-auto">
                 <table className="table table-zebra table-pin-cols ">
-                    {/* head */}
                     <thead>
                     <tr>
                         <th>Name</th>
