@@ -71,7 +71,7 @@ model Client {
   name         String
   phone        String
   address      String
-  serialNumber String  @unique
+  serialNumber Int      @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   createdBy    User     @relation(fields: [createdById], references: [id])
@@ -81,11 +81,11 @@ model Client {
 
 model Loan {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  amount          String
-  interestRate    String
-  totalPayable    String?
-  remainingAmount String?
-  paidAmount      String
+  amount          Int
+  interestRate    Int
+  totalPayable    Int?
+  remainingAmount Int?
+  paidAmount      Int
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   client          Client    @relation(fields: [clientId], references: [id])
