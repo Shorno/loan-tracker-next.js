@@ -1,10 +1,10 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
@@ -67,19 +67,16 @@ model VerificationToken {
 }
 
 model Client {
-  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
-  name                 String
-  phone                String
-  address              String
-  serialNumber         Int      @unique
-  loanGuarantorPhone   String?
-  loanGuarantorName    String?
-  loanGuarantorAddress String?
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-  createdBy            User     @relation(fields: [createdById], references: [id])
-  createdById          String   @db.ObjectId
-  loan                 Loan?
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  phone        String
+  address      String
+  serialNumber Int      @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  createdBy    User     @relation(fields: [createdById], references: [id])
+  createdById  String   @db.ObjectId
+  loan         Loan?
 }
 
 model Loan {
@@ -89,9 +86,6 @@ model Loan {
   totalPayable    Int?
   remainingAmount Int?
   paidAmount      Int
-  test            Int
-  totalSavings    Int
-  startDate       DateTime
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   client          Client    @relation(fields: [clientId], references: [id])
@@ -101,9 +95,8 @@ model Loan {
 
 model Payment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  amount    Int
+  amount    String
   date      DateTime
-  savings   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   loan      Loan     @relation(fields: [loanId], references: [id])

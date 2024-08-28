@@ -9,8 +9,13 @@ export const createClientLoanAction = async (data: any) => {
         const validatedClientLoanData = clientLoanSchema.parse(data);
 
         const {
-            name, phone, address, serialNumber,
-            amount, interestRate, paidAmount
+            name,
+            phone,
+            address,
+            serialNumber,
+            amount,
+            interestRate,
+            paidAmount
         } = validatedClientLoanData;
 
         // Get the current user's session
@@ -46,22 +51,17 @@ export const createClientLoanAction = async (data: any) => {
             });
 
 
-            const loanAmount = parseInt(amount, 10);
-            const loanInterestRate = parseInt(interestRate, 10);
-            const loanPaidAmount = parseInt(paidAmount, 10);
-
-
-            const totalPayable = Math.round(loanAmount * (1 + loanInterestRate / 100));
-            const remainingAmount = totalPayable - loanPaidAmount;
+            const totalPayable = Math.round(amount * (1 + interestRate / 100));
+            const remainingAmount = totalPayable - paidAmount;
 
             const loan = await prisma.loan.create({
                 data: {
                     clientId: client.id,
-                    amount: loanAmount.toString(),
-                    interestRate: loanInterestRate.toString(),
-                    paidAmount: loanPaidAmount.toString(),
-                    totalPayable: totalPayable.toString(),
-                    remainingAmount: remainingAmount.toString(),
+                    amount,
+                    interestRate,
+                    paidAmount,
+                    totalPayable,
+                    remainingAmount,
                 }
             });
 
@@ -77,6 +77,7 @@ export const createClientLoanAction = async (data: any) => {
         return {error: "Unexpected server error occurred. Please try again"};
     }
 }
+
 
 
 export const getAllClients = async () => {

@@ -7,8 +7,7 @@ import {CircleAlert, Loader} from "lucide-react";
 import {clientLoanSchema} from "@/schemas/clientSchema"; // You'll need to create this
 import {createClientLoanAction} from "@/actions/clients";
 import toast from "react-hot-toast";
-import {useRouter} from "next/navigation"; // You'll need to create this
-
+import {useRouter} from "next/navigation";
 
 type ClientLoanFormData = z.infer<typeof clientLoanSchema>;
 
@@ -23,10 +22,10 @@ export default function ClientLoanCreationForm() {
             name: "",
             phone: "",
             address: "",
-            serialNumber: "",
-            amount: "",
-            interestRate: "",
-            paidAmount: "",
+            serialNumber: 0,
+            amount: 0,
+            interestRate: 0,
+            paidAmount: 0,
         }
     });
 
@@ -80,7 +79,8 @@ export default function ClientLoanCreationForm() {
                                 <span className="label-text">Phone</span>
                             </label>
                             <input
-                                type="tel"
+                                type={"text"}
+                                inputMode={"numeric"}
                                 placeholder="Enter phone number"
                                 {...register("phone")}
                                 className={`input input-bordered ${errors.phone ? 'input-error' : ''}`}
@@ -108,7 +108,8 @@ export default function ClientLoanCreationForm() {
                                 <span className="label-text">Serial Number</span>
                             </label>
                             <input
-                                type="text"
+                                type="number"
+                                inputMode={"numeric"}
                                 placeholder="Enter serial number"
                                 {...register("serialNumber")}
                                 className={`input input-bordered ${errors.serialNumber ? 'input-error' : ''}`}
@@ -123,7 +124,8 @@ export default function ClientLoanCreationForm() {
                                 <span className="label-text">Loan Amount</span>
                             </label>
                             <input
-                                type="text"
+                                type="number"
+                                inputMode={"numeric"}
                                 placeholder="Enter loan amount"
                                 {...register("amount")}
                                 className={`input input-bordered ${errors.amount ? 'input-error' : ''}`}
@@ -137,7 +139,8 @@ export default function ClientLoanCreationForm() {
                                 <span className="label-text">Interest Rate</span>
                             </label>
                             <input
-                                type="text"
+                                type="number"
+                                inputMode={"numeric"}
                                 placeholder="Enter interest rate"
                                 {...register("interestRate")}
                                 className={`input input-bordered ${errors.interestRate ? 'input-error' : ''}`}
@@ -151,7 +154,8 @@ export default function ClientLoanCreationForm() {
                                 <span className="label-text">Paid Amount</span>
                             </label>
                             <input
-                                type="text"
+                                type="number"
+                                inputMode={"numeric"}
                                 placeholder="Enter paid amount"
                                 {...register("paidAmount")}
                                 className={`input input-bordered ${errors.paidAmount ? 'input-error' : ''}`}
