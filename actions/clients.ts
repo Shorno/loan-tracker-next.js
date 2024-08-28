@@ -15,7 +15,10 @@ export const createClientLoanAction = async (data: any) => {
             serialNumber,
             amount,
             interestRate,
-            paidAmount
+            paidAmount,
+            loanGuarantorName,
+            loanGuarantorPhone,
+            loanGuarantorAddress
         } = validatedClientLoanData;
 
         // Get the current user's session
@@ -46,6 +49,9 @@ export const createClientLoanAction = async (data: any) => {
                     phone,
                     address,
                     serialNumber,
+                    loanGuarantorName,
+                    loanGuarantorAddress,
+                    loanGuarantorPhone,
                     createdById: currentUserId,
                 }
             });
@@ -77,7 +83,6 @@ export const createClientLoanAction = async (data: any) => {
         return {error: "Unexpected server error occurred. Please try again"};
     }
 }
-
 
 
 export const getAllClients = async () => {

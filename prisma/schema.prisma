@@ -67,16 +67,19 @@ model VerificationToken {
 }
 
 model Client {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  phone        String
-  address      String
-  serialNumber Int      @unique
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  createdBy    User     @relation(fields: [createdById], references: [id])
-  createdById  String   @db.ObjectId
-  loan         Loan?
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  phone                String
+  address              String
+  serialNumber         Int      @unique
+  loanGuarantorName    String
+  loanGuarantorPhone   String
+  loanGuarantorAddress String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  createdBy            User     @relation(fields: [createdById], references: [id])
+  createdById          String   @db.ObjectId
+  loan                 Loan?
 }
 
 model Loan {
@@ -95,7 +98,7 @@ model Loan {
 
 model Payment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  amount    String
+  amount    Int
   date      DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

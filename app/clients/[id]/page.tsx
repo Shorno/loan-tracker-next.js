@@ -24,6 +24,24 @@ export default async function ClientDetails({params}: { params: { id: string } }
                         <p>{client?.address}</p>
                     </div>
                 </div>
+                <div className="divider -mt-4">
+                    <span className={"badge badge-lg"}>Loan Guranter</span>
+                </div>
+                <div className={"flex pb-8 py-4"}>
+                    <div className={"flex justify-center gap-4 items-center max-w-80"}>
+                        <div className={"flex justify-between items-center"}>
+                            <p className={"badge rounded-md"}>{client?.loanGuarantorName}</p>
+                        </div>
+                        <div className={"flex justify-center text-base-content items-center"}>
+                            <p className={"badge rounded-md"}>{client?.loanGuarantorPhone}</p>
+                        </div>
+                        <div className={"flex justify-center items-center"}>
+                            <p className={"badge rounded-md"}>{client?.loanGuarantorAddress}</p>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
             <div className={"grid pt-8 grid-cols-2 gap-1 px-4"}>
                 <div className="stats shadow">
@@ -50,7 +68,6 @@ export default async function ClientDetails({params}: { params: { id: string } }
                         <div className="stat-value text-3xl overflow-hidden">{loan?.interestRate}%</div>
                     </div>
                 </div>
-
             </div>
 
         </div>

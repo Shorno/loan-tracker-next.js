@@ -12,7 +12,16 @@ export const clientSchema = z.object({
         .min(3, {message: "Address should be at least 3 characters long."}),
     serialNumber: z.coerce.number({message: "Serial number must be a number."})
         .int({message: "Serial number cannot be fraction."})
-        .min(1, {message: "Serial number is required."})
+        .min(1, {message: "Serial number is required."}),
+    loanGuarantorName: z.string()
+        .min(1, {message: "Please enter the loan guarantor's name."}),
+    loanGuarantorPhone: z.string()
+        .min(1, {message: "Phone number is required."})
+        .regex(/^\d{11}$/, {message: "Phone number must be 11 digits."}),
+    loanGuarantorAddress: z.string()
+        .min(1, {message: "Please enter the client's address."})
+        .min(3, {message: "Address should be at least 3 characters long."}),
+
 });
 
 export const loanSchema = z.object({
@@ -30,7 +39,7 @@ export const loanSchema = z.object({
 });
 
 export const paymentSchema = z.object({
-    amount: z.string()
+    amount: z.coerce.number({message: "Payment amount must be a number."}).int({message: "Payment amount cannot be fraction."})
         .min(0.01, {message: "Payment amount is required."}),
     date: z.coerce.date()
         .min(new Date("2000-01-01"), {message: "Date must be after year 2000"})

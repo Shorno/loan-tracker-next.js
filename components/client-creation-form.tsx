@@ -26,6 +26,9 @@ export default function ClientLoanCreationForm() {
             amount: 0,
             interestRate: 0,
             paidAmount: 0,
+            loanGuarantorName: "",
+            loanGuarantorPhone: "",
+            loanGuarantorAddress: "",
         }
     });
 
@@ -162,6 +165,49 @@ export default function ClientLoanCreationForm() {
                             />
                             {errors.paidAmount &&
                                 <span className="text-error text-xs mt-1">{String(errors.paidAmount.message)}</span>}
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Guarantor Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="Enter guarantor's name"
+                                {...register("loanGuarantorName")}
+                                className={`input input-bordered ${errors.paidAmount ? 'input-error' : ''}`}
+                            />
+                            {errors.loanGuarantorName &&
+                                <span
+                                    className="text-error text-xs mt-1">{String(errors.loanGuarantorName.message)}</span>}
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Guarantor Phone</span>
+                            </label>
+                            <input
+                                type="text"
+                                inputMode={"numeric"}
+                                placeholder="Enter guarantor's phone number"
+                                {...register("loanGuarantorPhone")}
+                                className={`input input-bordered ${errors.loanGuarantorPhone ? 'input-error' : ''}`}
+                            />
+                            {errors.loanGuarantorPhone &&
+                                <span
+                                    className="text-error text-xs mt-1">{String(errors.loanGuarantorPhone.message)}</span>}
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Guarantor Address</span>
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="Enter guarantor's address"
+                                {...register("loanGuarantorAddress")}
+                                className={`input input-bordered ${errors.loanGuarantorAddress ? 'input-error' : ''}`}
+                            />
+                            {errors.loanGuarantorAddress &&
+                                <span
+                                    className="text-error text-xs mt-1">{String(errors.loanGuarantorAddress.message)}</span>}
                         </div>
 
                         {serverError && (
