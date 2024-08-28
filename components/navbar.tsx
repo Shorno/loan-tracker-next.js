@@ -31,7 +31,8 @@ export default function Navbar() {
         <>
             <div className="z-30">
                 <div className="">
-                    <div className="navbar container fixed lg:relative mx-auto bg-base-100 lg:shadow-none z-10 shadow-md">
+                    <div
+                        className="navbar container fixed lg:relative mx-auto bg-base-100 lg:shadow-none z-10 shadow-md">
                         <div className="flex-1 flex items-center">
                             <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                                 <Link href={"/"}>
@@ -45,11 +46,17 @@ export default function Navbar() {
                                 {isAuthenticated ? (
                                     <div className="flex items-center">
                                         <div className="hidden flex-none lg:block mr-4">
-                                            <ul className="menu menu-horizontal">
+                                            <ul className="menu menu-horizontal gap-4">
                                                 <li>
                                                     <Link href={"/dashboard"}
                                                           className={`${path === "/dashboard" ? "bg-base-300" : ""} `}>
                                                         Dashboard
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link href={"/clients"}
+                                                          className={`${path === "/clients" ? "bg-base-300" : ""} `}>
+                                                        Clients
                                                     </Link>
                                                 </li>
                                             </ul>
@@ -83,7 +90,10 @@ export default function Navbar() {
                                                 <DropdownMenuSeparator className="bg-gray-300"/>
                                                 <DropdownMenuItem
                                                     className="hover:bg-zinc-800 rounded-md hover:text-base-200"
-                                                    onClick={() => signOut({callbackUrl: "/auth/login", redirect: true})}
+                                                    onClick={() => signOut({
+                                                        callbackUrl: "/auth/login",
+                                                        redirect: true
+                                                    })}
                                                 >
                                                     <LogOut className="mr-2 h-4 w-4"/>
                                                     <span>Log out</span>

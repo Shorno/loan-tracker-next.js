@@ -1,5 +1,6 @@
 import {getAllClients} from "@/actions/clients";
 import Link from "next/link";
+import {PlusCircle} from "lucide-react";
 
 export default async function ClientsPage() {
     const {data} = await getAllClients();
@@ -8,6 +9,12 @@ export default async function ClientsPage() {
 
     return (
         <div className={"h-screen pt-24 container mx-auto"}>
+            <div className={"flex justify-end pr-4 pb-8"}>
+                <Link href={"/clients/new"} className={"btn btn-neutral btn-xs rounded-md"}>
+                      <PlusCircle size={15}/>
+                      <p>Add member</p>
+                </Link>
+            </div>
             <div className="overflow-x-auto">
                 <table className="table table-zebra  table-pin-cols table-pin-rows ">
                     <thead>
