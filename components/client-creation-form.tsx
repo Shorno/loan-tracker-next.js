@@ -19,16 +19,17 @@ export default function ClientLoanCreationForm() {
         mode: "all",
         resolver: zodResolver(clientLoanSchema),
         defaultValues: {
-            name: "",
-            phone: "",
-            address: "",
-            serialNumber: 0,
-            amount: 0,
-            interestRate: 0,
-            paidAmount: 0,
-            loanGuarantorName: "",
-            loanGuarantorPhone: "",
-            loanGuarantorAddress: "",
+            clientName: "",
+            clientPhone: "",
+            clientAddress: "",
+            clientSerialNumber: 0,
+            guarantorName: "",
+            guarantorPhone: "",
+            guarantorAddress: "",
+            loanAmount: 0,
+            loanInterestRate: 0,
+            totalPaidAmount: 0,
+            netAmountPayable: 0,
         }
     });
 
@@ -70,11 +71,11 @@ export default function ClientLoanCreationForm() {
                             <input
                                 type="text"
                                 placeholder="Enter client's name"
-                                {...register("name")}
-                                className={`input input-bordered ${errors.name ? 'input-error' : ''}`}
+                                {...register("clientName")}
+                                className={`input input-bordered ${errors.clientName ? 'input-error' : ''}`}
                             />
-                            {errors.name &&
-                                <span className="text-error text-xs mt-1">{String(errors.name.message)}</span>}
+                            {errors.clientName &&
+                                <span className="text-error text-xs mt-1">{String(errors.clientName.message)}</span>}
                         </div>
 
                         <div className="form-control">
@@ -85,11 +86,11 @@ export default function ClientLoanCreationForm() {
                                 type={"text"}
                                 inputMode={"numeric"}
                                 placeholder="Enter phone number"
-                                {...register("phone")}
-                                className={`input input-bordered ${errors.phone ? 'input-error' : ''}`}
+                                {...register("clientPhone")}
+                                className={`input input-bordered ${errors.clientPhone ? 'input-error' : ''}`}
                             />
-                            {errors.phone &&
-                                <span className="text-error text-xs mt-1">{String(errors.phone.message)}</span>}
+                            {errors.clientPhone &&
+                                <span className="text-error text-xs mt-1">{String(errors.clientPhone.message)}</span>}
                         </div>
 
                         <div className="form-control">
@@ -99,11 +100,11 @@ export default function ClientLoanCreationForm() {
                             <input
                                 type="text"
                                 placeholder="Enter address"
-                                {...register("address")}
-                                className={`input input-bordered ${errors.address ? 'input-error' : ''}`}
+                                {...register("clientAddress")}
+                                className={`input input-bordered ${errors.clientAddress ? 'input-error' : ''}`}
                             />
-                            {errors.address &&
-                                <span className="text-error text-xs mt-1">{String(errors.address.message)}</span>}
+                            {errors.clientAddress &&
+                                <span className="text-error text-xs mt-1">{String(errors.clientAddress.message)}</span>}
                         </div>
 
                         <div className="form-control">
@@ -114,11 +115,11 @@ export default function ClientLoanCreationForm() {
                                 type="number"
                                 inputMode={"numeric"}
                                 placeholder="Enter serial number"
-                                {...register("serialNumber")}
-                                className={`input input-bordered ${errors.serialNumber ? 'input-error' : ''}`}
+                                {...register("clientSerialNumber")}
+                                className={`input input-bordered ${errors.clientSerialNumber ? 'input-error' : ''}`}
                             />
-                            {errors.serialNumber &&
-                                <span className="text-error text-xs mt-1">{String(errors.serialNumber.message)}</span>}
+                            {errors.clientSerialNumber &&
+                                <span className="text-error text-xs mt-1">{String(errors.clientSerialNumber.message)}</span>}
                         </div>
 
                         {/* Loan Details */}
@@ -130,11 +131,11 @@ export default function ClientLoanCreationForm() {
                                 type="number"
                                 inputMode={"numeric"}
                                 placeholder="Enter loan amount"
-                                {...register("amount")}
-                                className={`input input-bordered ${errors.amount ? 'input-error' : ''}`}
+                                {...register("loanAmount")}
+                                className={`input input-bordered ${errors.loanAmount ? 'input-error' : ''}`}
                             />
-                            {errors.amount &&
-                                <span className="text-error text-xs mt-1">{String(errors.amount.message)}</span>}
+                            {errors.loanAmount &&
+                                <span className="text-error text-xs mt-1">{String(errors.loanAmount.message)}</span>}
                         </div>
 
                         <div className="form-control">
@@ -145,11 +146,11 @@ export default function ClientLoanCreationForm() {
                                 type="number"
                                 inputMode={"numeric"}
                                 placeholder="Enter interest rate"
-                                {...register("interestRate")}
-                                className={`input input-bordered ${errors.interestRate ? 'input-error' : ''}`}
+                                {...register("loanInterestRate")}
+                                className={`input input-bordered ${errors.loanInterestRate ? 'input-error' : ''}`}
                             />
-                            {errors.interestRate &&
-                                <span className="text-error text-xs mt-1">{String(errors.interestRate.message)}</span>}
+                            {errors.loanInterestRate &&
+                                <span className="text-error text-xs mt-1">{String(errors.loanInterestRate.message)}</span>}
                         </div>
 
                         <div className="form-control">
@@ -160,11 +161,11 @@ export default function ClientLoanCreationForm() {
                                 type="number"
                                 inputMode={"numeric"}
                                 placeholder="Enter paid amount"
-                                {...register("paidAmount")}
-                                className={`input input-bordered ${errors.paidAmount ? 'input-error' : ''}`}
+                                {...register("totalPaidAmount")}
+                                className={`input input-bordered ${errors.totalPaidAmount ? 'input-error' : ''}`}
                             />
-                            {errors.paidAmount &&
-                                <span className="text-error text-xs mt-1">{String(errors.paidAmount.message)}</span>}
+                            {errors.totalPaidAmount &&
+                                <span className="text-error text-xs mt-1">{String(errors.totalPaidAmount.message)}</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -173,12 +174,12 @@ export default function ClientLoanCreationForm() {
                             <input
                                 type="text"
                                 placeholder="Enter guarantor's name"
-                                {...register("loanGuarantorName")}
-                                className={`input input-bordered ${errors.paidAmount ? 'input-error' : ''}`}
+                                {...register("guarantorName")}
+                                className={`input input-bordered ${errors.guarantorName ? 'input-error' : ''}`}
                             />
-                            {errors.loanGuarantorName &&
+                            {errors.guarantorName &&
                                 <span
-                                    className="text-error text-xs mt-1">{String(errors.loanGuarantorName.message)}</span>}
+                                    className="text-error text-xs mt-1">{String(errors.guarantorName.message)}</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -188,12 +189,12 @@ export default function ClientLoanCreationForm() {
                                 type="text"
                                 inputMode={"numeric"}
                                 placeholder="Enter guarantor's phone number"
-                                {...register("loanGuarantorPhone")}
-                                className={`input input-bordered ${errors.loanGuarantorPhone ? 'input-error' : ''}`}
+                                {...register("guarantorPhone")}
+                                className={`input input-bordered ${errors.guarantorPhone ? 'input-error' : ''}`}
                             />
-                            {errors.loanGuarantorPhone &&
+                            {errors.guarantorPhone &&
                                 <span
-                                    className="text-error text-xs mt-1">{String(errors.loanGuarantorPhone.message)}</span>}
+                                    className="text-error text-xs mt-1">{String(errors.guarantorPhone.message)}</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -202,12 +203,12 @@ export default function ClientLoanCreationForm() {
                             <input
                                 type="text"
                                 placeholder="Enter guarantor's address"
-                                {...register("loanGuarantorAddress")}
-                                className={`input input-bordered ${errors.loanGuarantorAddress ? 'input-error' : ''}`}
+                                {...register("guarantorAddress")}
+                                className={`input input-bordered ${errors.guarantorAddress ? 'input-error' : ''}`}
                             />
-                            {errors.loanGuarantorAddress &&
+                            {errors.guarantorAddress &&
                                 <span
-                                    className="text-error text-xs mt-1">{String(errors.loanGuarantorAddress.message)}</span>}
+                                    className="text-error text-xs mt-1">{String(errors.guarantorAddress.message)}</span>}
                         </div>
 
                         {serverError && (

@@ -9,16 +9,16 @@ export const createClientLoanAction = async (data: any) => {
         const validatedClientLoanData = clientLoanSchema.parse(data);
 
         const {
-            name,
-            phone,
-            address,
-            serialNumber,
-            amount,
-            interestRate,
-            paidAmount,
-            loanGuarantorName,
-            loanGuarantorPhone,
-            loanGuarantorAddress
+            clientName,
+            clientPhone,
+            clientAddress,
+            clientSerialNumber,
+            guarantorName,
+            guarantorPhone,
+            guarantorAddress,
+            loanAmount,
+            loanInterestRate,
+            totalPaidAmount,
         } = validatedClientLoanData;
 
         // Get the current user's session
@@ -30,11 +30,11 @@ export const createClientLoanAction = async (data: any) => {
 
         // Check if client with this serial number already exists
         const existingClient = await prisma.client.findUnique({
-            where: {serialNumber}
+            where: {clientSerialNumber}
         });
 
         if (existingClient) {
-            return {error: `Client with serial number ${serialNumber} already exists.`}
+            return {error: `Client with serial number ${clientSerialNumber} already exists.`}
         }
 
         if (!currentUserId) {
@@ -45,29 +45,30 @@ export const createClientLoanAction = async (data: any) => {
         const result = await prisma.$transaction(async (prisma) => {
             const client = await prisma.client.create({
                 data: {
-                    name,
-                    phone,
-                    address,
-                    serialNumber,
-                    loanGuarantorName,
-                    loanGuarantorAddress,
-                    loanGuarantorPhone,
+                    clientName,
+                    clientPhone,
+                    clientAddress,
+                    clientSerialNumber,
+                    guarantorName,
+                    guarantorAddress,
+                    guarantorPhone,
                     createdById: currentUserId,
                 }
             });
 
 
-            const totalPayable = Math.round(amount * (1 + interestRate / 100));
-            const remainingAmount = totalPayable - paidAmount;
+            const totalAmountPayable = Math.round(loanAmount * (1 + loanInterestRate / 100));
+            const remainingAmountPayable = totalAmountPayable - totalPaidAmount;
 
             const loan = await prisma.loan.create({
                 data: {
                     clientId: client.id,
-                    amount,
-                    interestRate,
-                    paidAmount,
-                    totalPayable,
-                    remainingAmount,
+                    loanAmount,
+                    loanInterestRate,
+                    totalPaidAmount,
+                    totalAmountPayable,
+                    remainingAmountPayable,
+                    netAmountPayable: remainingAmountPayable,
                 }
             });
 
@@ -123,58 +124,11 @@ export const getClientById = async (id: string) => {
 };
 
 
-// export const addPaymentAction = async (loanId: string, data: any) => {
-//     try {
-//         const validatedPaymentData = paymentSchema.parse(data);
-//
-//         const {amount, savings, date} = validatedPaymentData;
-//
-//         // Get the current user's session
-//         const session = await auth();
-//         const currentUserId = session?.user?.id;
-//         if (!session || !session.user || !session.user.id) {
-//             return {error: "You must be logged in to add a payment."};
-//         }
-//
-//         if (!currentUserId) {
-//             return {error: "Current user ID is undefined."};
-//         }
-//
-//         // Check if loan exists
-//         const existingLoan = await prisma.loan.findUnique({
-//             where: {id: loanId}
-//         });
-//
-//         if (!existingLoan) {
-//             return {error: `Loan with ID ${loanId} does not exist.`}
-//         }
-//
-//         // Create payment
-//         const result = await prisma.payment.create({
-//             data: {
-//                 amount,
-//                 savings,
-//                 date,
-//                 loanId,
-//             }
-//         });
-//
-//         console.log("Payment added successfully");
-//         return {success: true, data: result};
-//     } catch (error) {
-//         if (error instanceof Error) {
-//             return {error: error.message}
-//         }
-//         return {error: "Unexpected server error occurred. Please try again"};
-//     }
-// }
-
-
 export const addPaymentAction = async (loanId: string, data: any) => {
     try {
         const validatedPaymentData = paymentSchema.parse(data);
 
-        const {amount, savings, date} = validatedPaymentData;
+        const {paymentAmount, savingsAmount, paymentDate} = validatedPaymentData;
 
         const session = await auth();
         const currentUserId = session?.user?.id;
@@ -194,25 +148,30 @@ export const addPaymentAction = async (loanId: string, data: any) => {
             return {error: `Loan with ID ${loanId} does not exist.`}
         }
 
+
         const result = await prisma.$transaction(async (prisma) => {
             const payment = await prisma.payment.create({
                 data: {
-                    amount,
-                    savings,
-                    date,
+                    paymentAmount,
+                    savingsAmount,
+                    paymentDate,
                     loanId,
                 }
             });
 
+
+            const newTotalSavings = (existingLoan.totalSavingsAmount || 0) + savingsAmount;
+            const newRemainingAmountPayable = (existingLoan.remainingAmountPayable || 0) - paymentAmount;
+            const newNetPayable = Math.max(newRemainingAmountPayable - newTotalSavings, 0);
+
+
             const updatedLoan = await prisma.loan.update({
                 where: {id: loanId},
                 data: {
-                    paidAmount: {increment: amount},
-                    remainingAmount: {decrement: amount},
-                    totalSavings: {increment: savings},
-                    netPayable: {
-                        decrement: amount + savings
-                    }
+                    totalPaidAmount: {increment: paymentAmount},
+                    remainingAmountPayable: {decrement: paymentAmount},
+                    totalSavingsAmount: newTotalSavings,
+                    netAmountPayable: newNetPayable
                 }
             });
 

@@ -23,31 +23,30 @@ export default async function ClientsPage() {
                         <th>Member Name</th>
                         <th>Due Amount</th>
                         <th>installment</th>
-                        <th>Info</th>
                     </tr>
                     </thead>
                     <tbody>
                     {clients && clients.map(client => (
                         <tr key={client.id}>
-                            <th>{client.name} #{client.serialNumber} </th>
-                            <td className={"badge badge-warning badge-xs mt-3"}>BDT {client.loan?.remainingAmount}</td>
-                            <td className={"badge badge-warning badge-xs mt-3"}>{client.loan?.id}</td>
+                            {client.loan && (
+                                <th>
+                                    <Link href={`/clients/${client.id}`} className={"text-blue-700"}>
+                                        {client.clientName} #{client.clientSerialNumber}
+                                    </Link>
+                                </th>
+                            )}
+
+                            <td className={"badge badge-warning badge-xs mt-3"}>BDT {client.loan?.remainingAmountPayable}</td>
                             <td>
                                 {client.loan && (
                                     <PaymentModal
-                                        remainingAmount={client.loan.remainingAmount}
-                                        clientName={client.name}
+                                        remainingAmount={client.loan.remainingAmountPayable}
+                                        clientName={client.clientName}
                                         loanId={client.loan.id}
                                     />
                                 )}
                             </td>
-                            {client.loan && (
-                                <td>
-                                    <Link href={`/clients/${client.id}`} className={"text-blue-700"}>
-                                        Details
-                                    </Link>
-                                </td>
-                            )}
+
                         </tr>
                     ))}
                     </tbody>

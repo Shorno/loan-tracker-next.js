@@ -24,8 +24,8 @@ export default function PaymentModal({loanId, clientName, remainingAmount}: Paym
         mode: "all",
         resolver: zodResolver(paymentSchema),
         defaultValues: {
-            amount: 0,
-            savings: 0,
+            paymentAmount: 0,
+            savingsAmount: 0,
         }
     });
 
@@ -72,11 +72,11 @@ export default function PaymentModal({loanId, clientName, remainingAmount}: Paym
                                 <input
                                     type="number"
                                     inputMode="numeric"
-                                    {...register("amount", {valueAsNumber: true})}
-                                    className={`input input-bordered w-full ${errors.amount ? 'input-error' : ''}`}
+                                    {...register("paymentAmount", {valueAsNumber: true})}
+                                    className={`input input-bordered w-full ${errors.paymentAmount ? 'input-error' : ''}`}
                                 />
-                                {errors.amount && (
-                                    <span className="text-error text-xs mt-1">{String(errors.amount.message)}</span>
+                                {errors.paymentAmount && (
+                                    <span className="text-error text-xs mt-1">{String(errors.paymentAmount.message)}</span>
                                 )}
                             </div>
                             <div className="form-control">
@@ -86,11 +86,11 @@ export default function PaymentModal({loanId, clientName, remainingAmount}: Paym
                                 <input
                                     type="number"
                                     inputMode="numeric"
-                                    {...register("savings", {valueAsNumber: true})}
-                                    className={`input input-bordered w-full ${errors.savings ? 'input-error' : ''}`}
+                                    {...register("savingsAmount", {valueAsNumber: true})}
+                                    className={`input input-bordered w-full ${errors.savingsAmount ? 'input-error' : ''}`}
                                 />
-                                {errors.savings && (
-                                    <span className="text-error text-xs mt-1">{String(errors.savings.message)}</span>
+                                {errors.savingsAmount && (
+                                    <span className="text-error text-xs mt-1">{String(errors.savingsAmount.message)}</span>
                                 )}
                             </div>
                             <div className="form-control">
@@ -99,11 +99,11 @@ export default function PaymentModal({loanId, clientName, remainingAmount}: Paym
                                 </label>
                                 <input
                                     type="datetime-local"
-                                    {...register("date")}
-                                    className={`input input-bordered w-full ${errors.date ? 'input-error' : ''}`}
+                                    {...register("paymentDate")}
+                                    className={`input input-bordered w-full ${errors.paymentDate ? 'input-error' : ''}`}
                                 />
-                                {errors.date && (
-                                    <span className="text-error text-xs mt-1">{String(errors.date.message)}</span>
+                                {errors.paymentDate && (
+                                    <span className="text-error text-xs mt-1">{String(errors.paymentDate.message)}</span>
                                 )}
                             </div>
                             {error && (

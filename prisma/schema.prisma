@@ -67,44 +67,44 @@ model VerificationToken {
 }
 
 model Client {
-  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
-  name                 String
-  phone                String
-  address              String
-  serialNumber         Int      @unique
-  loanGuarantorName    String
-  loanGuarantorPhone   String
-  loanGuarantorAddress String
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-  createdBy            User     @relation(fields: [createdById], references: [id])
-  createdById          String   @db.ObjectId
-  loan                 Loan?
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  clientName         String
+  clientPhone        String
+  clientAddress      String
+  clientSerialNumber Int      @unique
+  guarantorName      String
+  guarantorPhone     String
+  guarantorAddress   String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  createdBy          User     @relation(fields: [createdById], references: [id])
+  createdById        String   @db.ObjectId
+  loan               Loan?
 }
 
 model Loan {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  amount          Int
-  interestRate    Int
-  totalPayable    Int?
-  remainingAmount Int?
-  paidAmount      Int
-  netPayable      Int?
-  totalSavings    Int?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  client          Client    @relation(fields: [clientId], references: [id])
-  clientId        String    @unique @db.ObjectId
-  payments        Payment[]
+  id                     String    @id @default(auto()) @map("_id") @db.ObjectId
+  loanAmount             Int
+  loanInterestRate       Int
+  totalAmountPayable     Int?
+  remainingAmountPayable Int?
+  totalPaidAmount        Int
+  netAmountPayable       Int?
+  totalSavingsAmount     Int?      @default(0)
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+  client                 Client    @relation(fields: [clientId], references: [id])
+  clientId               String    @unique @db.ObjectId
+  payments               Payment[]
 }
 
 model Payment {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  amount    Int
-  savings   Int
-  date      DateTime
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  loan      Loan      @relation(fields: [loanId], references: [id])
-  loanId    String    @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  paymentAmount Int
+  savingsAmount Int
+  paymentDate   DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  loan          Loan     @relation(fields: [loanId], references: [id])
+  loanId        String   @db.ObjectId
 }
