@@ -57,7 +57,7 @@ export default function PaymentModal({loanId, clientName, remainingAmount}: Paym
 
     return (
         <>
-            <button className="btn btn-xs btn-neutral" onClick={() => setIsOpen(true)}>Payment</button>
+            <button className="btn btn-sm btn-neutral" onClick={() => setIsOpen(true)}>Payment</button>
 
             {isOpen && (
                 <div className="modal modal-open">

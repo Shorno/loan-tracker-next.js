@@ -7,11 +7,11 @@ export default async function ClientsPage() {
     const {data} = await getAllClients();
     const clients = data;
 
-
     return (
         <div className={"h-screen pt-24 container mx-auto"}>
-            <div className={"flex justify-end pr-4 pb-8"}>
-                <Link href={"/clients/new"} className={"btn btn-neutral btn-xs rounded-md"}>
+            <div className={"flex justify-between px-4 pb-8"}>
+                <h1 className={"text-2xl font-extrabold"}>Members List</h1>
+                <Link href={"/clients/new"} className={"btn btn-neutral btn-sm rounded-md"}>
                     <PlusCircle size={15}/>
                     <p>Add member</p>
                 </Link>
@@ -22,7 +22,7 @@ export default async function ClientsPage() {
                     <tr>
                         <th>Member Name</th>
                         <th>Due Amount</th>
-                        <th>installment</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,7 +36,7 @@ export default async function ClientsPage() {
                                 </th>
                             )}
 
-                            <td className={"badge badge-warning badge-xs mt-3"}>BDT {client.loan?.remainingAmountPayable}</td>
+                            <td className={"badge badge-warning badge-xs mt-4"}>BDT {client.loan?.remainingAmountPayable}</td>
                             <td>
                                 {client.loan && (
                                     <PaymentModal

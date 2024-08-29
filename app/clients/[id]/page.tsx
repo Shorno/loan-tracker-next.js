@@ -1,5 +1,6 @@
 import {getClientById} from "@/actions/clients";
 import {MapPin} from "lucide-react";
+import Link from "next/link";
 
 export default async function ClientDetails({params}: { params: { id: string } }) {
     const id = params.id;
@@ -47,47 +48,47 @@ export default async function ClientDetails({params}: { params: { id: string } }
                 <div className="stats shadow">
                     <div className="stat">
                         <div className="stat-title">Loan Amount</div>
-                        <div className="stat-value text-3xl overflow-hidden">{loan?.loanAmount}৳</div>
+                        <div className="stat-value text-[1.7rem] overflow-hidden">{loan?.loanAmount}৳</div>
+                    </div>
+                </div>
+                <div className="stats shadow">
+                    <div className="stat">
+                        <div className="stat-title">With Interest</div>
+                        <div className="stat-value text-[1.7rem] overflow-hidden">{loan?.totalAmountPayable}৳</div>
                     </div>
                 </div>
                 <div className="stats shadow">
                     <div className="stat">
                         <div className="stat-title">Total Paid</div>
-                        <div className="stat-value text-3xl overflow-hidden text-teal-600">{loan?.totalPaidAmount}৳</div>
+                        <div className="stat-value text-[1.7rem] overflow-hidden text-teal-600">{loan?.totalPaidAmount}৳
+                        </div>
                     </div>
                 </div>
                 <div className="stats shadow">
                     <div className="stat">
                         <div className="stat-title">Due Payment</div>
-                        <div className="stat-value text-3xl overflow-hidden text-red-500">{loan?.remainingAmountPayable}৳</div>
-                    </div>
-                </div>
-                <div className="stats shadow">
-                    <div className="stat">
-                        <div className="stat-title">Interest Rate</div>
-                        <div className="stat-value text-3xl overflow-hidden">{loan?.loanInterestRate}%</div>
+                        <div
+                            className="stat-value text-[1.7rem] overflow-hidden text-red-500">{loan?.remainingAmountPayable}৳
+                        </div>
                     </div>
                 </div>
 
                 <div className="stats shadow">
                     <div className="stat">
                         <div className="stat-title">Net Payable</div>
-                        <div className="stat-value text-3xl overflow-hidden">{loan?.netAmountPayable}</div>
+                        <div className="stat-value text-[1.7rem] overflow-hidden">{loan?.netAmountPayable}৳</div>
                     </div>
                 </div>
                 <div className="stats shadow">
                     <div className="stat">
                         <div className="stat-title">Total Savings</div>
-                        <div className="stat-value text-3xl overflow-hidden">{loan?.totalSavingsAmount}</div>
+                        <div className="stat-value  text-[1.7rem] overflow-hidden">{loan?.totalSavingsAmount}৳</div>
                     </div>
                 </div>
-                <div className="stats shadow">
-                    <div className="stat">
-                        <div className="stat-title">Total Payable With Interest</div>
-                        <div className="stat-value text-3xl overflow-hidden">{loan?.totalAmountPayable}</div>
-                    </div>
-                </div>
+
             </div>
+
+            <Link href={`/clients/${id}/history`} className={"btn btn-primary mt-8"}>View Payment History</Link>
 
         </div>
     )

@@ -75,7 +75,7 @@ export const createClientLoanAction = async (data: any) => {
                     totalPaidAmount,
                     initialSavingsAmount,
                     totalAmountPayable,
-                    remainingAmountPayable : netAmountPayable,
+                    remainingAmountPayable: netAmountPayable,
                     netAmountPayable,
                     totalSavingsAmount: calculatedInitialSavings,
                     startDate: new Date(),
@@ -198,3 +198,65 @@ export const addPaymentAction = async (loanId: string, data: any) => {
         return {error: "Unexpected server error occurred. Please try again"};
     }
 }
+
+export const getTotalLoanAmount = async () => {
+    const result = await prisma.loan.aggregate({
+        _sum: {
+            loanAmount: true
+        }
+    });
+    return result._sum.loanAmount || 0;
+}
+
+// export const getClientLoanHistory = async (id: string) => {
+//     try {
+//         const client = await prisma.client.findUnique({
+//             where: {id},
+//             include: {
+//                 loan: {
+//                     include: {
+//                         payments: true
+//                     }
+//                 }
+//             }
+//         });
+//
+//         if (!client) {
+//             return {error: "Client not found"};
+//         }
+//
+//         return {success: true, data: client};
+//     } catch (error) {
+//         if (error instanceof Error) {
+//             return {error: error.message};
+//         }
+//         return {error: "Unexpected server error occurred. Please try again"};
+//     }
+// }
+
+export const getClientPaymentHistoryById = async (id: string) => {
+    try {
+        const paymentHistory = await prisma.payment.findMany({
+            where: {
+                loan: {
+                    clientId: id
+                }
+            },
+            orderBy: {
+                paymentDate: 'desc'
+            }
+        });
+
+        if (!paymentHistory.length) {
+            return { success: true, data: [] };
+        }
+
+        return { success: true, data: paymentHistory };
+
+    } catch (error) {
+        if (error instanceof Error) {
+            return { success: false, error: error.message };
+        }
+        return { success: false, error: "Unexpected server error occurred. Please try again" };
+    }
+};
