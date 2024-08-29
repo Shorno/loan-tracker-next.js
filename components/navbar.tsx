@@ -3,6 +3,7 @@ import Link from "next/link"
 import {signOut, useSession} from "next-auth/react"
 import {Menu} from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import SiteLogo from "@/public/loan-track-icon.png";
 import {
     LogOut,
     Settings,
@@ -36,7 +37,7 @@ export default function Navbar() {
                         <div className="flex-1 flex items-center">
                             <h1 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                                 <Link href={"/"} className={"bg-gradient-to-r from-black to-blue-700 text-transparent bg-clip-text flex justify-center items-center gap-4"}>
-                                    <Image src={"/loan-track-icon.png"} alt={"logo"} width={40} height={40}/>
+                                    <Image src={SiteLogo} alt={"logo"} width={40} height={40}/>
                                     Loan Track
                                 </Link>
                             </h1>
