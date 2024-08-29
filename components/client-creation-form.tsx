@@ -27,7 +27,6 @@ export default function ClientLoanCreationForm() {
             guarantorPhone: "",
             guarantorAddress: "",
             loanAmount: 0,
-            loanInterestRate: 0,
             totalPaidAmount: 0,
             netAmountPayable: 0,
         }
@@ -119,7 +118,8 @@ export default function ClientLoanCreationForm() {
                                 className={`input input-bordered ${errors.clientSerialNumber ? 'input-error' : ''}`}
                             />
                             {errors.clientSerialNumber &&
-                                <span className="text-error text-xs mt-1">{String(errors.clientSerialNumber.message)}</span>}
+                                <span
+                                    className="text-error text-xs mt-1">{String(errors.clientSerialNumber.message)}</span>}
                         </div>
 
                         {/* Loan Details */}
@@ -140,17 +140,16 @@ export default function ClientLoanCreationForm() {
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text">Interest Rate</span>
+                                <span className="label-text">Start Date</span>
                             </label>
                             <input
-                                type="number"
-                                inputMode={"numeric"}
-                                placeholder="Enter interest rate"
-                                {...register("loanInterestRate")}
-                                className={`input input-bordered ${errors.loanInterestRate ? 'input-error' : ''}`}
+                                type="datetime-local"
+                                placeholder="Enter loan start date"
+                                {...register("startDate")}
+                                className={`input input-bordered ${errors.startDate ? 'input-error' : ''}`}
                             />
-                            {errors.loanInterestRate &&
-                                <span className="text-error text-xs mt-1">{String(errors.loanInterestRate.message)}</span>}
+                            {errors.startDate &&
+                                <span className="text-error text-xs mt-1">{String(errors.startDate.message)}</span>}
                         </div>
 
                         <div className="form-control">
@@ -165,7 +164,8 @@ export default function ClientLoanCreationForm() {
                                 className={`input input-bordered ${errors.totalPaidAmount ? 'input-error' : ''}`}
                             />
                             {errors.totalPaidAmount &&
-                                <span className="text-error text-xs mt-1">{String(errors.totalPaidAmount.message)}</span>}
+                                <span
+                                    className="text-error text-xs mt-1">{String(errors.totalPaidAmount.message)}</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">

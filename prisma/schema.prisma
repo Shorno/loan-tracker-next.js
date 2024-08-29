@@ -85,12 +85,15 @@ model Client {
 model Loan {
   id                     String    @id @default(auto()) @map("_id") @db.ObjectId
   loanAmount             Int
-  loanInterestRate       Int
+  loanInterestRate       Int?      @default(20)
   totalAmountPayable     Int?
   remainingAmountPayable Int?
   totalPaidAmount        Int
   netAmountPayable       Int?
+  initialSavingsAmount   Int?      @default(10)
   totalSavingsAmount     Int?      @default(0)
+  startDate              DateTime
+  duration               Int       @default(120)
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
   client                 Client    @relation(fields: [clientId], references: [id])

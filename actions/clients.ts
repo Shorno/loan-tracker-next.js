@@ -17,6 +17,7 @@ export const createClientLoanAction = async (data: any) => {
             guarantorPhone,
             guarantorAddress,
             loanAmount,
+            initialSavingsAmount,
             loanInterestRate,
             totalPaidAmount,
         } = validatedClientLoanData;
@@ -40,6 +41,12 @@ export const createClientLoanAction = async (data: any) => {
         if (!currentUserId) {
             return {error: "Current user ID is undefined."};
         }
+
+        const interestRate = loanInterestRate / 100;
+        const totalAmountPayable = Math.round(loanAmount * (1 + interestRate));
+        const calculatedInitialSavings = Math.round(loanAmount * (initialSavingsAmount / 100));
+        const netAmountPayable = totalAmountPayable - calculatedInitialSavings;
+
 
         // Create client and loan in a single transaction
         const result = await prisma.$transaction(async (prisma) => {
@@ -66,9 +73,13 @@ export const createClientLoanAction = async (data: any) => {
                     loanAmount,
                     loanInterestRate,
                     totalPaidAmount,
+                    initialSavingsAmount,
                     totalAmountPayable,
-                    remainingAmountPayable,
-                    netAmountPayable: remainingAmountPayable,
+                    remainingAmountPayable : netAmountPayable,
+                    netAmountPayable,
+                    totalSavingsAmount: calculatedInitialSavings,
+                    startDate: new Date(),
+
                 }
             });
 
