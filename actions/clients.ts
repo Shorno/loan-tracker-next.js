@@ -123,13 +123,59 @@ export const getClientById = async (id: string) => {
 };
 
 
+// export const addPaymentAction = async (loanId: string, data: any) => {
+//     try {
+//         const validatedPaymentData = paymentSchema.parse(data);
+//
+//         const {amount, savings, date} = validatedPaymentData;
+//
+//         // Get the current user's session
+//         const session = await auth();
+//         const currentUserId = session?.user?.id;
+//         if (!session || !session.user || !session.user.id) {
+//             return {error: "You must be logged in to add a payment."};
+//         }
+//
+//         if (!currentUserId) {
+//             return {error: "Current user ID is undefined."};
+//         }
+//
+//         // Check if loan exists
+//         const existingLoan = await prisma.loan.findUnique({
+//             where: {id: loanId}
+//         });
+//
+//         if (!existingLoan) {
+//             return {error: `Loan with ID ${loanId} does not exist.`}
+//         }
+//
+//         // Create payment
+//         const result = await prisma.payment.create({
+//             data: {
+//                 amount,
+//                 savings,
+//                 date,
+//                 loanId,
+//             }
+//         });
+//
+//         console.log("Payment added successfully");
+//         return {success: true, data: result};
+//     } catch (error) {
+//         if (error instanceof Error) {
+//             return {error: error.message}
+//         }
+//         return {error: "Unexpected server error occurred. Please try again"};
+//     }
+// }
+
+
 export const addPaymentAction = async (loanId: string, data: any) => {
     try {
         const validatedPaymentData = paymentSchema.parse(data);
 
         const {amount, savings, date} = validatedPaymentData;
 
-        // Get the current user's session
         const session = await auth();
         const currentUserId = session?.user?.id;
         if (!session || !session.user || !session.user.id) {
@@ -140,7 +186,6 @@ export const addPaymentAction = async (loanId: string, data: any) => {
             return {error: "Current user ID is undefined."};
         }
 
-        // Check if loan exists
         const existingLoan = await prisma.loan.findUnique({
             where: {id: loanId}
         });
@@ -149,14 +194,29 @@ export const addPaymentAction = async (loanId: string, data: any) => {
             return {error: `Loan with ID ${loanId} does not exist.`}
         }
 
-        // Create payment
-        const result = await prisma.payment.create({
-            data: {
-                amount,
-                savings,
-                date,
-                loanId,
-            }
+        const result = await prisma.$transaction(async (prisma) => {
+            const payment = await prisma.payment.create({
+                data: {
+                    amount,
+                    savings,
+                    date,
+                    loanId,
+                }
+            });
+
+            const updatedLoan = await prisma.loan.update({
+                where: {id: loanId},
+                data: {
+                    paidAmount: {increment: amount},
+                    remainingAmount: {decrement: amount},
+                    totalSavings: {increment: savings},
+                    netPayable: {
+                        decrement: amount + savings
+                    }
+                }
+            });
+
+            return {payment, updatedLoan};
         });
 
         console.log("Payment added successfully");

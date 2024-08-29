@@ -1,5 +1,4 @@
 import {getAllClients} from "@/actions/clients";
-import Image from "next/image";
 
 export default async function DashboardPage() {
     const {data} = await getAllClients();
@@ -52,10 +51,7 @@ export default async function DashboardPage() {
                         <div className="stat-figure text-secondary">
                             <div className="avatar online">
                                 <div className="w-16 rounded-full">
-                                    <Image
-                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                                        alt="avatar"
-                                    />
+
                                 </div>
                             </div>
                         </div>
