@@ -25,7 +25,6 @@ export default function Navbar() {
     const isLoading = status === "loading"
     const path = usePathname();
 
-    console.log(isAuthenticated)
 
     return (
         <>

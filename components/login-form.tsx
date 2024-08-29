@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {loginSchema} from "@/schemas/authSchema";
+import {loginSchema} from "@/zod-schemas/authSchema";
 import {z} from "zod";
 import {CircleAlertIcon, Loader} from "lucide-react";
 import {signIn} from "next-auth/react";

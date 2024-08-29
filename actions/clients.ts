@@ -1,6 +1,6 @@
 "use server"
 import prisma from "@/prisma/db";
-import {clientLoanSchema} from "@/schemas/clientSchema";
+import {clientLoanSchema, paymentSchema} from "@/zod-schemas/clientSchema";
 import {auth} from "@/auth";
 
 
@@ -121,3 +121,50 @@ export const getClientById = async (id: string) => {
         return {error: "Unexpected server error occurred. Please try again"};
     }
 };
+
+
+export const addPaymentAction = async (loanId: string, data: any) => {
+    try {
+        const validatedPaymentData = paymentSchema.parse(data);
+
+        const {amount, savings, date} = validatedPaymentData;
+
+        // Get the current user's session
+        const session = await auth();
+        const currentUserId = session?.user?.id;
+        if (!session || !session.user || !session.user.id) {
+            return {error: "You must be logged in to add a payment."};
+        }
+
+        if (!currentUserId) {
+            return {error: "Current user ID is undefined."};
+        }
+
+        // Check if loan exists
+        const existingLoan = await prisma.loan.findUnique({
+            where: {id: loanId}
+        });
+
+        if (!existingLoan) {
+            return {error: `Loan with ID ${loanId} does not exist.`}
+        }
+
+        // Create payment
+        const result = await prisma.payment.create({
+            data: {
+                amount,
+                savings,
+                date,
+                loanId,
+            }
+        });
+
+        console.log("Payment added successfully");
+        return {success: true, data: result};
+    } catch (error) {
+        if (error instanceof Error) {
+            return {error: error.message}
+        }
+        return {error: "Unexpected server error occurred. Please try again"};
+    }
+}

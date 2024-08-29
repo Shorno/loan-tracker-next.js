@@ -89,6 +89,8 @@ model Loan {
   totalPayable    Int?
   remainingAmount Int?
   paidAmount      Int
+  netPayable      Int?
+  totalSavings    Int?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   client          Client    @relation(fields: [clientId], references: [id])
@@ -97,11 +99,12 @@ model Loan {
 }
 
 model Payment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   amount    Int
+  savings   Int
   date      DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  loan      Loan     @relation(fields: [loanId], references: [id])
-  loanId    String   @db.ObjectId
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  loan      Loan      @relation(fields: [loanId], references: [id])
+  loanId    String    @db.ObjectId
 }

@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {CircleAlert, Loader} from "lucide-react";
-import {clientLoanSchema} from "@/schemas/clientSchema"; // You'll need to create this
+import {clientLoanSchema} from "@/zod-schemas/clientSchema"; // You'll need to create this
 import {createClientLoanAction} from "@/actions/clients";
 import toast from "react-hot-toast";
 import {useRouter} from "next/navigation";

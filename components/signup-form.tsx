@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import Link from "next/link";
 import {CircleAlert, Loader} from "lucide-react";
-import {signupSchema} from "@/schemas/authSchema";
+import {signupSchema} from "@/zod-schemas/authSchema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {signupAction} from "@/actions/user";
 import {z} from "zod";

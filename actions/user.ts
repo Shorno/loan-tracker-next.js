@@ -2,7 +2,7 @@
 import prisma from "@/prisma/db";
 import bcrypt from "bcryptjs";
 import {redirect} from "next/navigation";
-import {signupSchema} from "@/schemas/authSchema";
+import {signupSchema} from "@/zod-schemas/authSchema";
 
 export const signupAction = async (data: any) => {
     try {
