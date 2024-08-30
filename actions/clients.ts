@@ -166,7 +166,7 @@ export const addPaymentAction = async (loanId: string, data: any) => {
                 data: {
                     paymentAmount,
                     savingsAmount,
-                    paymentDate,
+                    paymentDate : new Date(paymentDate),
                     loanId,
                 }
             });
