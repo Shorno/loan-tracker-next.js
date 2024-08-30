@@ -7,10 +7,12 @@ export default async function DashboardPage() {
 
 
 
+
+
     return (
         <>
             <div className="pt-24 overflow-x-auto container mx-auto">
-                <div className="stats shadow flex flex-col">
+                <div className="flex flex-col">
                     <div className="stat">
                         <div className="stat-title">Total Members</div>
                         <div className="stat-value text-primary">{totalClients}</div>

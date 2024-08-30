@@ -1,11 +1,7 @@
-import {getClientPaymentHistoryById} from "@/actions/clients";
+import {getAllPayments} from "@/actions/clients";
 
-export default async function PaymentHistoryPage({params}: { params: { id: string } }) {
-
-    const id = params.id;
-
-    const {data: payments} = await getClientPaymentHistoryById(id);
-
+export default async function PaymentHistoryPage() {
+    const {data : payments} = await getAllPayments();
 
     return (
         <>
@@ -18,17 +14,24 @@ export default async function PaymentHistoryPage({params}: { params: { id: strin
                         <thead>
                         <tr>
                             <th>Date</th>
+                            <th>Name</th>
                             <th>Amount</th>
                             <th>Savings</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {payments && payments?.map(payment => (
+                        {payments && payments.map((payment) => (
                             <tr key={payment.id}>
-                                <td className={""}>{payment.paymentDate.toLocaleDateString()}</td>
-                                <td className={""}>{payment.paymentAmount}৳</td>
-                                <td className={""}>{payment.savingsAmount}৳</td>
-
+                                <td className={""}>
+                                    {new Date(payment.paymentDate).toLocaleDateString('en-US', {
+                                        day: '2-digit',
+                                        month: 'short',
+                                        year: 'numeric'
+                                    })}
+                                </td>
+                                <td className={""}>{payment.clientName}</td>
+                                <td className={""}>{payment.paymentAmount}</td>
+                                <td className={""}>{payment.savingsAmount}</td>
                             </tr>
                         ))}
                         </tbody>

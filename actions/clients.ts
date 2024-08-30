@@ -166,7 +166,7 @@ export const addPaymentAction = async (loanId: string, data: any) => {
                 data: {
                     paymentAmount,
                     savingsAmount,
-                    paymentDate : new Date(paymentDate),
+                    paymentDate: new Date(paymentDate),
                     loanId,
                 }
             });
@@ -224,15 +224,51 @@ export const getClientPaymentHistoryById = async (id: string) => {
         });
 
         if (!paymentHistory.length) {
-            return { success: true, data: [] };
+            return {success: true, data: []};
         }
 
-        return { success: true, data: paymentHistory };
+        return {success: true, data: paymentHistory};
 
     } catch (error) {
         if (error instanceof Error) {
-            return { success: false, error: error.message };
+            return {success: false, error: error.message};
         }
-        return { success: false, error: "Unexpected server error occurred. Please try again" };
+        return {success: false, error: "Unexpected server error occurred. Please try again"};
     }
 };
+
+
+export const getAllPayments = async () => {
+    try {
+        const payments = await prisma.payment.findMany({
+            include: {
+                loan: {
+                    include: {
+                        client: {
+                            select: {
+                                id: true,
+                                clientName: true,
+                                clientSerialNumber: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const formattedPayments = payments.map(payment => ({
+            ...payment,
+            clientName: payment.loan.client.clientName,
+            clientId: payment.loan.client.id,
+            clientSerialNumber: payment.loan.client.clientSerialNumber,
+
+        }));
+
+        return { success: true, data: formattedPayments };
+    } catch (error) {
+        if (error instanceof Error) {
+            return { error: error.message };
+        }
+        return { error: "Unexpected server error occurred. Please try again" };
+    }
+}
