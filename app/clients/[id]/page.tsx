@@ -1,12 +1,15 @@
 import {getClientById} from "@/actions/clients";
 import {MapPin} from "lucide-react";
 import Link from "next/link";
+import DynamicProgressbar from "@/components/dynamic-progressbar";
 
 export default async function ClientDetails({params}: { params: { id: string } }) {
     const id = params.id;
     const response = await getClientById(id);
     const client = response.data;
     const loan = client?.loan;
+    const loanStartDate = loan?.startDate.toLocaleDateString();
+    const loanDuration = loan?.duration;
 
 
     return (
@@ -18,7 +21,8 @@ export default async function ClientDetails({params}: { params: { id: string } }
                     </div>
                 </div>
                 <div className="card-body justify-center items-center -mt-4">
-                    <h2 className="card-title text-2xl">{client?.clientName} <span>#{client?.clientSerialNumber}</span></h2>
+                    <h2 className="card-title text-2xl">{client?.clientName} <span>#{client?.clientSerialNumber}</span>
+                    </h2>
                     <p className={"badge badge-neutral badge-lg mt-2"}>{client?.clientPhone}</p>
                     <div className={"flex gap-2 py-2"}>
                         <MapPin/>
@@ -40,10 +44,14 @@ export default async function ClientDetails({params}: { params: { id: string } }
                             <p className={"badge rounded-md"}>{client?.guarantorAddress}</p>
                         </div>
                     </div>
-
                 </div>
-
             </div>
+
+            <div className={"border-b border-gray-200 mt-4"}>
+                <DynamicProgressbar startDate={loanStartDate} duration={loanDuration} label={loanDuration}/>
+            </div>
+
+
             <div className={"grid pt-8 grid-cols-2 gap-1 px-4"}>
                 <div className="stats shadow">
                     <div className="stat">
@@ -88,8 +96,12 @@ export default async function ClientDetails({params}: { params: { id: string } }
 
             </div>
 
-            <Link href={`/clients/${id}/history`} className={"btn btn-primary mt-8"}>View Payment History</Link>
-
+            <div className={"container mx-auto flex items-center justify-center"}>
+                <Link href={`/clients/${id}/history`}
+                      className={"btn btn-neutral mt-8 w-80 btn-sm rounded-md mb-4 mx-auto"}>
+                    View Payment History
+                </Link>
+            </div>
         </div>
     )
 }

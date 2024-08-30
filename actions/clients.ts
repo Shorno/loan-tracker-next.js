@@ -20,6 +20,7 @@ export const createClientLoanAction = async (data: any) => {
             initialSavingsAmount,
             loanInterestRate,
             totalPaidAmount,
+            startDate
         } = validatedClientLoanData;
 
         // Get the current user's session
@@ -78,7 +79,7 @@ export const createClientLoanAction = async (data: any) => {
                     remainingAmountPayable: netAmountPayable,
                     netAmountPayable,
                     totalSavingsAmount: calculatedInitialSavings,
-                    startDate: new Date(),
+                    startDate: new Date(startDate),
 
                 }
             });
@@ -208,31 +209,6 @@ export const getTotalLoanAmount = async () => {
     return result._sum.loanAmount || 0;
 }
 
-// export const getClientLoanHistory = async (id: string) => {
-//     try {
-//         const client = await prisma.client.findUnique({
-//             where: {id},
-//             include: {
-//                 loan: {
-//                     include: {
-//                         payments: true
-//                     }
-//                 }
-//             }
-//         });
-//
-//         if (!client) {
-//             return {error: "Client not found"};
-//         }
-//
-//         return {success: true, data: client};
-//     } catch (error) {
-//         if (error instanceof Error) {
-//             return {error: error.message};
-//         }
-//         return {error: "Unexpected server error occurred. Please try again"};
-//     }
-// }
 
 export const getClientPaymentHistoryById = async (id: string) => {
     try {
