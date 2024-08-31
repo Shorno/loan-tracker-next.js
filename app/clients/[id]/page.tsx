@@ -30,7 +30,7 @@ export default async function ClientDetails({params}: { params: { id: string } }
                     </div>
                 </div>
                 <div className="divider -mt-4">
-                    <span className={"badge badge-lg"}>Loan Guranter</span>
+                    <span className={"text-zinc-600"}>Loan Guranter</span>
                 </div>
                 <div className={"flex pb-8 py-4"}>
                     <div className={"flex justify-center gap-4 items-center max-w-80"}>

@@ -28,7 +28,6 @@ export default async function PaymentHistoryPage({params}: { params: { id: strin
                                 <td className={""}>{payment.paymentDate.toLocaleDateString()}</td>
                                 <td className={""}>{payment.paymentAmount}৳</td>
                                 <td className={""}>{payment.savingsAmount}৳</td>
-
                             </tr>
                         ))}
                         </tbody>
