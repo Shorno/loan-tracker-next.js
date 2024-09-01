@@ -8,6 +8,8 @@ import {z} from "zod";
 import {CircleAlertIcon, Loader} from "lucide-react";
 import {signIn} from "next-auth/react";
 import {useRouter} from "next/navigation";
+import GoogleIcon from "@/public/google.svg"
+import Image from "next/image";
 
 type LoginFormData = z.infer<typeof loginSchema>
 
@@ -100,6 +102,17 @@ export default function LoginForm() {
                                 {isSubmitting ? <Loader className="animate-spin"/> : "Login"}
                             </button>
                         </div>
+
+                        <div className="divider">OR</div>
+                        <div className="form-control">
+                            <button className="btn" type={"button"}
+                                    onClick={() => signIn("google", {callbackUrl: "/dashboard"})}>
+                                <Image width={"25"} src={GoogleIcon} alt={"Google Icon"}/>
+                                Continue with Google
+                            </button>
+
+                        </div>
+
                         <label className="label py-4">
                             <p>Don&apos;t have an account?</p> <p><Link href={"/auth/signup"}
                                                                         className="link link-hover text-blue-700 font-semibold ">Sign

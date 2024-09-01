@@ -3,14 +3,17 @@ import {PrismaAdapter} from "@auth/prisma-adapter";
 import prisma from "@/prisma/db";
 import bcrypt from "bcryptjs";
 import Credentials from "@auth/core/providers/credentials";
-import { CredentialsSignin } from "@auth/core/errors" // import is specific to your framework
+import {CredentialsSignin} from "@auth/core/errors"
+import Google from "@auth/core/providers/google";
 
 class UserNotFound extends CredentialsSignin {
     code = "404";
 }
+
 class InvalidCredentials extends CredentialsSignin {
     code = "401";
 }
+
 class InvalidPassword extends CredentialsSignin {
     code = "401";
 }
@@ -18,6 +21,18 @@ class InvalidPassword extends CredentialsSignin {
 export const {handlers, auth, signIn, signOut} = NextAuth({
     adapter: PrismaAdapter(prisma),
     providers: [
+        Google({
+           clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+
+            authorization : {
+                params: {
+                    access_type: "offline",
+                    prompt: "consent",
+                    response_type: "code",
+                }
+            }
+        }),
         Credentials({
             credentials: {
                 email: {
