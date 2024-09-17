@@ -46,7 +46,7 @@ export const createClientLoanAction = async (data: any) => {
         const interestRate = loanInterestRate / 100;
         const totalAmountPayable = Math.round(loanAmount * (1 + interestRate));
         const calculatedInitialSavings = Math.round(loanAmount * (initialSavingsAmount / 100));
-        const netAmountPayable = totalAmountPayable - calculatedInitialSavings;
+        // const netAmountPayable = totalAmountPayable - calculatedInitialSavings;
 
 
         // Create client and loan in a single transaction
@@ -67,6 +67,8 @@ export const createClientLoanAction = async (data: any) => {
 
             const totalAmountPayable = Math.round(loanAmount * (1 + loanInterestRate / 100));
             const remainingAmountPayable = totalAmountPayable - totalPaidAmount;
+            const netAmountPayable = remainingAmountPayable - calculatedInitialSavings;
+
 
             const loan = await prisma.loan.create({
                 data: {
