@@ -31,10 +31,8 @@ export default function PaymentModal({loanId, clientName, remainingAmount}: Paym
 
     const onSubmit = async (data: PaymentFormData) => {
 
-        console.log('Form data before submit:', data);
 
         try {
-            // Simulate API call
             const response = await addPaymentAction(loanId, data);
             if (response.error) {
                 setError(response.error);

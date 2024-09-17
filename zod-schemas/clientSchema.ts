@@ -45,8 +45,8 @@ export const loanSchema = z.object({
 
 export const paymentSchema = z.object({
     paymentAmount: z.coerce.number({message: "Payment amount must be a number."}).int({message: "Payment amount cannot be fraction."})
-        .min(1, {message: "Payment amount is required."}),
-    savingsAmount: z.coerce.number({message: "Savings amount must be a number."}).int({message: "Savings amount cannot be fraction."}).min(1, {message: "Savings amount is required."}),
+        .min(0, {message: "Payment amount is required."}),
+    savingsAmount: z.coerce.number({message: "Savings amount is required"}).int({message: "Savings amount cannot be fraction."}).min(1, {message: "Savings amount is required."}),
     paymentDate: z.coerce.date()
         .min(new Date("2000-01-01"), {message: "Date must be after year 2000"})
         .max(new Date(), {message: "Date cannot be in the future"}),

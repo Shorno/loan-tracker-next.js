@@ -76,7 +76,7 @@ export const createClientLoanAction = async (data: any) => {
                     totalPaidAmount,
                     initialSavingsAmount,
                     totalAmountPayable,
-                    remainingAmountPayable: netAmountPayable,
+                    remainingAmountPayable,
                     netAmountPayable,
                     totalSavingsAmount: calculatedInitialSavings,
                     startDate: new Date(startDate),
